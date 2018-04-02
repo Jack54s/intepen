@@ -1,7 +1,7 @@
 package com.jack.intepen.service;
 
-import com.jack.intepen.dao.OldManDao;
-import com.jack.intepen.entity.OldMan;
+import com.jack.intepen.dao.ElderDao;
+import com.jack.intepen.entity.Elder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,24 +12,24 @@ import java.util.List;
  * Created by 11407 on 30/030.
  */
 @Service
-public class OldManService {
+public class ElderService {
 
     @Autowired
-    private OldManDao oldManDao;
+    private ElderDao elderDao;
 
-    public List<OldMan> getOldManList(){
-        return oldManDao.queryOldMan();
+    public List<Elder> getElderList(){
+        return elderDao.queryElder();
     }
 
-    public OldMan getOldManById(int id){
-        return oldManDao.queryOldManById(id);
+    public Elder getElderById(int id){
+        return elderDao.queryElderById(id);
     }
 
     @Transactional
-    public boolean addOldMan(OldMan oldMan){
-        if(oldMan.getName() != null && !"".equals(oldMan.getName())){
+    public boolean addElder(Elder elder){
+        if(elder.getName() != null && !"".equals(elder.getName())){
             try{
-                int effectNum = oldManDao.insertOldMan(oldMan);
+                int effectNum = elderDao.insertElder(elder);
                 if(effectNum > 0 ){
                     return true;
                 }
@@ -46,10 +46,10 @@ public class OldManService {
         }
     }
 
-    public boolean modifyOldMan(OldMan oldMan){
-        if(oldMan.getId() != null && !"".equals(oldMan.getId())){
+    public boolean modifyElder(Elder elder){
+        if(elder.getId() != null && !"".equals(elder.getId())){
             try{
-                int effectNum = oldManDao.updateOldMan(oldMan);
+                int effectNum = elderDao.updateElder(elder);
                 if(effectNum > 0 ){
                     return true;
                 }
@@ -66,10 +66,11 @@ public class OldManService {
         }
 
     }
-    public boolean deleteOldMan(int id){
+
+    public boolean deleteElder(int id){
         if(id > 0){
             try{
-                int effectNum = oldManDao.deleteOldMan(id);
+                int effectNum = elderDao.deleteElder(id);
                 if(effectNum > 0 ){
                     return true;
                 }

@@ -3,7 +3,7 @@ package com.jack.intepen.entity;
 /**
  * Created by 11407 on 30/030.
  */
-public class OldMan {
+public class Elder {
 
     private Integer id;
 
@@ -25,9 +25,7 @@ public class OldMan {
         return sex;
     }
 
-    public Integer getAge() {
-        return age;
-    }
+    public Integer getAge() { return age; }
 
     public void setId(Integer id) {
         this.id = id;

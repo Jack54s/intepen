@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.ElderDao">
+    <select id="queryElder" resultType="com.jack.intepen.entity.Elder">
+        SELECT id, name, sex, age
+        FROM intepen_elder
+    </select>
+    <select id="queryElderById" resultType="com.jack.intepen.entity.Elder">
+        SELECT id, name, sex, age
+        FROM intepen_elder
+        WHERE 
+        id = #{id}
+    </select>
+    <insert id="insertElder" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.Elder">
+        INSERT INTO intepen_elder(name, sex, age)
+        VALUES (#{name}, #{sex}, #{age})
+    </insert>
+    <update id="updateElder" parameterType="com.jack.intepen.entity.Elder">
+        UPDATE intepen_elder
+        SET name = #{name}, sex = #{sex}, age = #{age}
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteElder">
+        DELETE FROM intepen_elder
+        WHERE id = #{id}
+    </delete>
+</mapper>
