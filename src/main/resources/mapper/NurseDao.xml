@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.NurseDao">
+    <select id="queryNurseById" resultType="com.jack.intepen.entity.Nurse">
+        SELECT id, account, password, salt, name, sex, age
+        FROM intepen_nurse
+        WHERE
+        id = #{id}
+    </select>
+    <select id="queryNurseByAccount" resultType="com.jack.intepen.entity.Nurse">
+        SELECT id, account, password, salt, name, sex, age
+        FROM intepen_nurse
+        WHERE
+        account = #{account}
+    </select>
+    <insert id="insertNurse" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.Nurse">
+        INSERT INTO intepen_nurse(account, password, salt, name, sex, age)
+        VALUES (#{account}, #{password}, #{salt}, #{name}, #{sex}, #{age})
+    </insert>
+    <update id="updateNurse" parameterType="com.jack.intepen.entity.Nurse">
+        UPDATE intepen_nurse
+        SET account = #{account}, name = #{name}, sex = #{sex}, age = #{age}
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteNurse">
+        DELETE FROM intepen_nurse
+        WHERE id = #{id}
+    </delete>
+    <select id="queryNurse" resultType="com.jack.intepen.entity.Nurse">
+        SELECT id, account, password, salt, name, sex, age
+        FROM intepen_nurse
+    </select>
+</mapper>
