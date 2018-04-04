@@ -34,3 +34,38 @@ CREATE TABLE intepen_nurse(
   `age` INT COMMENT '年龄',
   PRIMARY KEY (id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '护工表';
+
+#RBAC
+DROP TABLE IF EXISTS sys_roles;
+CREATE TABLE sys_roles(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '角色编号',
+  `role` VARCHAR(128) NOT NULL COMMENT '角色',
+  `description` VARCHAR(500) NOT NULL COMMENT '角色描述',
+  PRIMARY KEY (id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '角色表';
+
+DROP TABLE IF EXISTS sys_permissions;
+CREATE TABLE sys_role(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '权限编号',
+  `name` VARCHAR(128) NOT NULL COMMENT '权限名称',
+  `resource_type` VARCHAR(128) NOT NULL COMMENT '资源描述',
+  `url` VARCHAR(128) NOT NULL COMMENT 'URL',
+  `permission` VARCHAR(128) NOT NULL COMMENT '权限',
+  PRIMARY KEY (id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '权限表';
+
+DROP TABLE IF EXISTS sys_role_permission;
+CREATE TABLE sys_role_permission(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `role_id` INT NOT NULL COMMENT '角色ID',
+  `permission_id` INT NOT NULL COMMENT '权限ID'
+  PRIMARY KEY (id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '角色权限关联表';
+
+DROP TABLE IF EXISTS sys_user_role;
+CREATE TABLE sys_user_role(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `user_id` INT NOT NULL COMMENT '用户ID',
+  `role_id` INT NOT NULL COMMENT '角色ID'
+  PRIMARY KEY (id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '用户角色关联表';
