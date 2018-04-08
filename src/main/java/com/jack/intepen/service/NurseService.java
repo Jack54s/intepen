@@ -1,17 +1,28 @@
 package com.jack.intepen.service;
 
 import com.jack.intepen.dao.NurseDao;
+import com.jack.intepen.dao.RBAC.SysPermissionsDao;
+import com.jack.intepen.dao.RBAC.SysRolePermissionDao;
+import com.jack.intepen.dao.RBAC.SysRolesDao;
+import com.jack.intepen.dao.RBAC.SysUserRoleDao;
 import com.jack.intepen.entity.Nurse;
+import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.service.UserInterface.SysUserService;
 import com.jack.intepen.util.EncryptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 11407 on 3/003.
  */
+@Service
 public class NurseService implements SysUserService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -19,9 +30,27 @@ public class NurseService implements SysUserService {
     @Autowired
     private NurseDao nurseDao;
 
+    @Autowired
+    private SysUserRoleDao sysUserRoleDao;
+
+    @Autowired
+    private SysRolesDao sysRolesDao;
+
+    @Autowired
+    private SysRolePermissionDao sysRolePermissionDao;
+
+    @Autowired
+    private SysPermissionsDao sysPermissionsDao;
+
+    public List<Nurse> getNurseList(){
+        return nurseDao.queryNurse();
+    }
+
     public Nurse getNurseByAccount(String account){
         return nurseDao.queryNurseByAccount(account);
     }
+
+    public Nurse getNurseById(int id){ return nurseDao.queryNurseById(id); }
 
     @Transactional
     public boolean addNurse(Nurse nurse){
@@ -97,5 +126,33 @@ public class NurseService implements SysUserService {
         else{
             throw new RuntimeException("护工ID不能为空！");
         }
+    }
+
+
+    public Set<String> getRoles(String account){
+
+        Nurse nurse = nurseDao.queryNurseByAccount(account);
+        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(nurse.getId());
+        Set<String> roles = new HashSet<>();
+        for(Integer roleId : roleIds){
+            SysRoles role = sysRolesDao.queryRoleById(roleId);
+            roles.add(role.getRole());
+        }
+        return roles;
+    }
+
+    public Set<String> getPermissions(String account) {
+
+        Nurse nurse = nurseDao.queryNurseByAccount(account);
+        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(nurse.getId());
+        Set<Integer> permissionIds = new HashSet<>();
+        Set<String> permissions = new HashSet<>();
+        for(Integer roleId : roleIds){
+            permissionIds.addAll(sysRolePermissionDao.queryPermissionByRoleId(roleId));
+        }
+        for(Integer permissionId : permissionIds){
+            permissions.add(sysPermissionsDao.queryPermissionById(permissionId).getPermission());
+        }
+        return permissions;
     }
 }

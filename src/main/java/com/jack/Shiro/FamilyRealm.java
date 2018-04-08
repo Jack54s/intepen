@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * Created by 11407 on 3/003.
  */
-@Repository
+/*@Repository
 public class FamilyRealm extends AuthorizingRealm {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -47,7 +47,7 @@ public class FamilyRealm extends AuthorizingRealm {
      * @return
      * @throws AuthenticationException
      */
-    @Override
+/*    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String account;
@@ -86,4 +86,4 @@ public class FamilyRealm extends AuthorizingRealm {
             }
         }
     }
-}
+}*/

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.RBAC.SysRolePermissionDao">
+    <insert id="insertRolePermission" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.RBAC.SysRolePermission">
+        INSERT INTO intepen_sys_role_permission(role_id, permission_id)
+        VALUES (#{roleId}, #{permissionId})
+    </insert>
+
+    <select id="queryPermissionById" resultType="com.jack.intepen.entity.RBAC.SysRolePermission">
+        SELECT id, role_id, permission_id
+        FROM intepen_sys_role_permission
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="queryPermissionByRoleId" resultType="java.lang.Integer">
+        SELECT permission_id
+        FROM intepen_sys_role_permission
+        WHERE
+        role_id = #{roleId}
+    </select>
+</mapper>

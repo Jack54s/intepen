@@ -5,7 +5,7 @@ import com.jack.intepen.dto.IntepenResult;
 /**
  * Created by 11407 on 2/002.
  */
-public class SysRole {
+public class SysRoles {
 
     private Integer id;
     private String role;

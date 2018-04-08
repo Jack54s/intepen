@@ -4,6 +4,7 @@ import com.jack.intepen.dto.IntepenResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.jack.intepen.enums.AuthcEnum;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     private IntepenResult exceptionHandler(HttpServletRequest req, Exception e){
-        return new IntepenResult(false, e.getMessage());
+        return new IntepenResult(AuthcEnum.ERROR.getCode(), e.getMessage());
     }
 }

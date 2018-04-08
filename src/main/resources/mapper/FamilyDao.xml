@@ -5,28 +5,28 @@
 <mapper namespace="com.jack.intepen.dao.FamilyDao">
     <select id="queryFamilyById" resultType="com.jack.intepen.entity.Family">
         SELECT id, account, password, salt
-        FROM intepen_family
+        FROM intepen_sys_user
         WHERE
         id = #{id}
     </select>
     <select id="queryFamilyByAccount" resultType="com.jack.intepen.entity.Family">
         SELECT id, account, password, salt
-        FROM intepen_family
+        FROM intepen_sys_user
         WHERE
         account = #{account}
     </select>
     <insert id="insertFamily" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.Family">
-        INSERT INTO intepen_family(account, password, salt)
-        VALUES (#{account}, #{password}, #{salt})
+        INSERT INTO intepen_sys_user(account, password, salt, flag)
+        VALUES (#{account}, #{password}, #{salt}, 2)
     </insert>
     <update id="updateFamily" parameterType="com.jack.intepen.entity.Family">
-        UPDATE intepen_family
+        UPDATE intepen_sys_user
         SET password = #{password}
         WHERE id = #{id}
     </update>
     <delete id="deleteFamily">
-        DELETE FROM intepen_family
+        DELETE FROM intepen_sys_user
         WHERE id = #{id}
     </delete>
 </mapper>

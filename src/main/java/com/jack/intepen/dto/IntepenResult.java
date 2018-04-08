@@ -5,28 +5,28 @@ package com.jack.intepen.dto;
  */
 public class IntepenResult<T> {
 
-    private boolean success;
+    private int code;
 
     private T data;
 
     private String error;
 
-    public IntepenResult(boolean success, T data){
-        this.success = success;
+    public IntepenResult(int code, T data){
+        this.code = code;
         this.data = data;
     }
 
-    public IntepenResult(boolean success, String error){
-        this.success = success;
+    public IntepenResult(int code, String error){
+        this.code = code;
         this.error = error;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public int getCode() {
+        return code;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public T getData() {

@@ -5,32 +5,33 @@
 <mapper namespace="com.jack.intepen.dao.NurseDao">
     <select id="queryNurseById" resultType="com.jack.intepen.entity.Nurse">
         SELECT id, account, password, salt, name, sex, age
-        FROM intepen_nurse
+        FROM intepen_sys_user
         WHERE
         id = #{id}
     </select>
     <select id="queryNurseByAccount" resultType="com.jack.intepen.entity.Nurse">
         SELECT id, account, password, salt, name, sex, age
-        FROM intepen_nurse
+        FROM intepen_sys_user
         WHERE
         account = #{account}
     </select>
     <insert id="insertNurse" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.Nurse">
-        INSERT INTO intepen_nurse(account, password, salt, name, sex, age)
-        VALUES (#{account}, #{password}, #{salt}, #{name}, #{sex}, #{age})
+        INSERT INTO intepen_sys_user(account, password, salt, name, sex, age, flag)
+        VALUES (#{account}, #{password}, #{salt}, #{name}, #{sex}, #{age}, 1)
     </insert>
     <update id="updateNurse" parameterType="com.jack.intepen.entity.Nurse">
-        UPDATE intepen_nurse
+        UPDATE intepen_sys_user
         SET account = #{account}, name = #{name}, sex = #{sex}, age = #{age}
         WHERE id = #{id}
     </update>
     <delete id="deleteNurse">
-        DELETE FROM intepen_nurse
+        DELETE FROM intepen_sys_user
         WHERE id = #{id}
     </delete>
     <select id="queryNurse" resultType="com.jack.intepen.entity.Nurse">
         SELECT id, account, password, salt, name, sex, age
-        FROM intepen_nurse
+        FROM intepen_sys_user
+        WHERE flag = 1
     </select>
 </mapper>

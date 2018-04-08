@@ -1,7 +1,12 @@
 package com.jack.intepen.service;
 
 import com.jack.intepen.dao.FamilyDao;
+import com.jack.intepen.dao.RBAC.SysPermissionsDao;
+import com.jack.intepen.dao.RBAC.SysRolePermissionDao;
+import com.jack.intepen.dao.RBAC.SysRolesDao;
+import com.jack.intepen.dao.RBAC.SysUserRoleDao;
 import com.jack.intepen.entity.Family;
+import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.service.UserInterface.SysUserService;
 import com.jack.intepen.util.EncryptionUtils;
 import org.slf4j.Logger;
@@ -9,6 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by 11407 on 3/003.
@@ -20,6 +29,18 @@ public class FamilyService implements SysUserService {
 
     @Autowired
     private FamilyDao familyDao;
+
+    @Autowired
+    private SysUserRoleDao sysUserRoleDao;
+
+    @Autowired
+    private SysRolePermissionDao sysRolePermissionDao;
+
+    @Autowired
+    private SysRolesDao sysRolesDao;
+
+    @Autowired
+    private SysPermissionsDao sysPermissionsDao;
 
     public Family getFamilyByAccount(String account){
         return familyDao.queryFamilyByAccount(account);
@@ -100,6 +121,33 @@ public class FamilyService implements SysUserService {
         else{
             throw new RuntimeException("家属ID不能为空！");
         }
+    }
+
+    public Set<String> getRoles(String account){
+
+        Family family = familyDao.queryFamilyByAccount(account);
+        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(family.getId());
+        Set<String> roles = new HashSet<>();
+        for(Integer roleId : roleIds){
+            SysRoles role = sysRolesDao.queryRoleById(roleId);
+            roles.add(role.getRole());
+        }
+        return roles;
+    }
+
+    public Set<String> getPermissions(String account) {
+
+        Family family = familyDao.queryFamilyByAccount(account);
+        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(family.getId());
+        Set<Integer> permissionIds = new HashSet<>();
+        Set<String> permissions = new HashSet<>();
+        for(Integer roleId : roleIds){
+            permissionIds.addAll(sysRolePermissionDao.queryPermissionByRoleId(roleId));
+        }
+        for(Integer permissionId : permissionIds){
+            permissions.add(sysPermissionsDao.queryPermissionById(permissionId).getPermission());
+        }
+        return permissions;
     }
 //
 //    public int checkPasswordByAccount(String account, String password){

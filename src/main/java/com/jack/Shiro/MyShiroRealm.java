@@ -101,18 +101,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 //        //根据用户ID查询角色（role），放入到Authorization里。
 //		/*Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("user_id", userId);
-//		List<SysRole> roleList = sysRoleService.selectByMap(map);
+//		List<SysRoles> roleList = sysRoleService.selectByMap(map);
 //		Set<String> roleSet = new HashSet<String>();
-//		for(SysRole role : roleList){
+//		for(SysRoles role : roleList){
 //			roleSet.add(role.getType());
 //		}*/
 //        Set<String> roleSet = new HashSet<String>();
 //        roleSet.add("100002");
 //        info.setRoles(roleSet);
 //        //根据用户ID查询权限（permission），放入到Authorization里。
-//		/*List<SysPermission> permissionList = sysPermissionService.selectByMap(map);
+//		/*List<SysPermissions> permissionList = sysPermissionService.selectByMap(map);
 //		Set<String> permissionSet = new HashSet<String>();
-//		for(SysPermission Permission : permissionList){
+//		for(SysPermissions Permission : permissionList){
 //			permissionSet.add(Permission.getName());
 //		}*/
 //        Set<String> permissionSet = new HashSet<String>();

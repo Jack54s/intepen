@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.RBAC.SysUserRoleDao">
+    <insert id="insertUserRole" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.RBAC.SysUserRole">
+        INSERT INTO intepen_sys_user_role(role_id, user_id)
+        VALUES (#{roleId}, #{userId})
+    </insert>
+
+    <select id="queryRoleByUserId" resultType="java.lang.Integer">
+        SELECT role_id
+        FROM intepen_sys_user_role
+        WHERE
+        user_id = #{userId}
+    </select>
+</mapper>

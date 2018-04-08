@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by 11407 on 2/002.
  */
-public class SysPermission implements Serializable {
+public class SysPermissions implements Serializable {
     
     private Integer id;//主键.
     private String name;//名称.

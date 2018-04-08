@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.RBAC.SysUserDao">
+    <insert id="insertSysUser" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.RBAC.SysUser">
+        INSERT INTO intepen_sys_user(account, password, salt)
+        VALUES (#{account}, #{password}, #{salt})
+    </insert>
+
+    <update id="updateSysUser" parameterType="com.jack.intepen.entity.RBAC.SysUser">
+        UPDATE intepen_sys_user
+        SET account = #{account}, password = #{password}, salt = #{salt}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteSysUser">
+        DELETE FROM intepen_sys_user
+        WHERE id = #{id}
+    </delete>
+
+    <select id="querySysUserById" resultType="com.jack.intepen.entity.RBAC.SysUser">
+        SELECT id, account, password, salt, flag
+        FROM intepen_sys_user
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="querySysUserByAccount" resultType="com.jack.intepen.entity.RBAC.SysUser">
+        SELECT id, account, password, salt, flag
+        FROM intepen_sys_user
+        WHERE
+        account = #{account}
+    </select>
+</mapper>
