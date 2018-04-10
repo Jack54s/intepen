@@ -13,6 +13,12 @@
         WHERE 
         id = #{id}
     </select>
+    <select id="queryUndistributedElder" resultType="com.jack.intepen.entity.Elder">
+        SELECT id, name, sex, age
+        FROM intepen_elder
+        WHERE
+        nurse_id IS NULL
+    </select>
     <insert id="insertElder" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.Elder">
         INSERT INTO intepen_elder(name, sex, age)
@@ -23,8 +29,19 @@
         SET name = #{name}, sex = #{sex}, age = #{age}
         WHERE id = #{id}
     </update>
+    <update id="distributeNurse">
+        UPDATE intepen_elder
+        SET nurse_id = #{nurseId}
+        WHERE id = #{id}
+    </update>
     <delete id="deleteElder">
         DELETE FROM intepen_elder
         WHERE id = #{id}
     </delete>
+    <select id="queryElderByName" resultType="com.jack.intepen.entity.Elder">
+        SELECT id, name, sex, age
+        FROM intepen_elder
+        WHERE
+        name = #{name}
+    </select>
 </mapper>

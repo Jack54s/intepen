@@ -15,6 +15,12 @@
         WHERE
         account = #{account}
     </select>
+    <select id="queryNurseByName" resultType="com.jack.intepen.entity.Nurse">
+        SELECT id, account, password, salt, name, sex, age
+        FROM intepen_sys_user
+        WHERE
+        name = #{name}
+    </select>
     <insert id="insertNurse" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.Nurse">
         INSERT INTO intepen_sys_user(account, password, salt, name, sex, age, flag)

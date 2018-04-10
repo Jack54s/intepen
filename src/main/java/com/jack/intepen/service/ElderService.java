@@ -25,6 +25,8 @@ public class ElderService {
         return elderDao.queryElderById(id);
     }
 
+    public List<Elder> getElderByName(String name) { return elderDao.queryElderByName(name); }
+
     @Transactional
     public boolean addElder(Elder elder){
         if(elder.getName() != null && !"".equals(elder.getName())){
@@ -84,6 +86,28 @@ public class ElderService {
         }
         else{
             throw new RuntimeException("老人ID不能为空！");
+        }
+    }
+
+    public List<Elder> getUndistributedElder(){ return elderDao.queryUndistributedElder(); }
+
+    public boolean distributeNurse(int id, int nurseId){
+        if(id > 0 && nurseId > 0){
+            try{
+                int effectNum = elderDao.distributeNurse(id, nurseId);
+                if(effectNum > 0 ){
+                    return true;
+                }
+                else{
+                    throw new RuntimeException("分配护工失败！");
+                }
+            }
+            catch (Exception e){
+                throw new RuntimeException("分配护工失败：" + e.getMessage());
+            }
+        }
+        else{
+            throw new RuntimeException("人员ID错误！");
         }
     }
 }

@@ -5,7 +5,7 @@ package com.jack.intepen.enums;
  */
 public enum FamilyEnum {
     UNKNOWN_ACCOUNT(300, "未找到此账号"),
-
+    LIST_FAMILY_ERROR(301, "获取家属列表信息失败")
     ;
 
     private int code;

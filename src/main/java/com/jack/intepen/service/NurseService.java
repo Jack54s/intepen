@@ -52,6 +52,8 @@ public class NurseService implements SysUserService {
 
     public Nurse getNurseById(int id){ return nurseDao.queryNurseById(id); }
 
+    public List<Nurse> getNurseByName(String name) { return nurseDao.queryNurseByName(name); }
+
     @Transactional
     public boolean addNurse(Nurse nurse){
 

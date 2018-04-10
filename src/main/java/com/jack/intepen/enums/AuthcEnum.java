@@ -13,6 +13,7 @@ public enum AuthcEnum {
     ACCOUNT_EXISTS(105, "账号已注册！"),
     ACCOUNT_UNLOGIN(106, "账号未登录！"),
     UNAUTHORIZING(107, "没有授权！"),
+    PARAM_ERROR(108, "参数错误！")
     ;
 
     private int code;

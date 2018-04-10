@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,6 +42,8 @@ public class FamilyService implements SysUserService {
 
     @Autowired
     private SysPermissionsDao sysPermissionsDao;
+
+    public List<Family> getFamilyList(){ return familyDao.queryFamily(); }
 
     public Family getFamilyByAccount(String account){
         return familyDao.queryFamilyByAccount(account);

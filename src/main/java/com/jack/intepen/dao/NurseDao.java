@@ -16,5 +16,6 @@ public interface NurseDao {
     int updateNurse(Nurse nurse);
     Nurse queryNurseById(int id);
     Nurse queryNurseByAccount(String account);
+    List<Nurse> queryNurseByName(String Name);
     List<Nurse> queryNurse();
 }

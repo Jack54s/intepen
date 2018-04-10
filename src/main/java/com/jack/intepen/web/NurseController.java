@@ -41,14 +41,28 @@ public class NurseController {
         }
     }
 
-    @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
-    private IntepenResult<Nurse> queryNurse(@PathVariable(value = "id") Integer id ){
+    @RequestMapping(value = "/profile/{account}", method = RequestMethod.GET)
+    private IntepenResult<Nurse> queryNurseByAccount(@PathVariable(value = "account") String account ){
 
         logger.info("------------------GET:/nurse/profile-----------------");
 
-        Nurse nurse = nurseService.getNurseById(id);
+        Nurse nurse = nurseService.getNurseByAccount(account);
         if(nurse != null){
             return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurse);
+        }
+        else{
+            return new IntepenResult<>(NurseEnum.QUERY_NURSE_ERROR.getCode(), NurseEnum.QUERY_NURSE_ERROR.getError());
+        }
+    }
+
+    @RequestMapping(value = "/search/{name}", method = RequestMethod.GET)
+    private IntepenResult<List> queryNurseByName(@PathVariable(value = "name") String name ){
+
+        logger.info("------------------GET:/nurse/search-----------------");
+
+        List<Nurse> nurses = nurseService.getNurseByName(name);
+        if(nurses != null){
+            return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurses);
         }
         else{
             return new IntepenResult<>(NurseEnum.QUERY_NURSE_ERROR.getCode(), NurseEnum.QUERY_NURSE_ERROR.getError());

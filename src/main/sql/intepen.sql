@@ -9,9 +9,11 @@ DROP TABLE IF EXISTS intepen_elder;
 CREATE TABLE intepen_elder(
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '老人编号',
   `name` VARCHAR(30) NOT NULL COMMENT '姓名',
-  `sex` VARCHAR(4) NOT NULL COMMENT '性别',
+  `sex` enum('男', '女') NOT NULL COMMENT '性别',
   `age` INT COMMENT '年龄',
-  PRIMARY KEY (id)
+  `nurse_id` INT COMMENT '分配的护工ID',
+  PRIMARY KEY (id),
+  CONSTRAINT NurseID_FK FOREIGN KEY(nurse_id) REFERENCES intepen_sys_user(id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '老人表';
 
 -- DROP TABLE IF EXISTS intepen_family;
@@ -77,8 +79,19 @@ CREATE TABLE intepen_sys_user(
   `password` VARCHAR(128) NOT NULL COMMENT '密码',
   `salt` VARCHAR(128) COMMENT '加密盐值',
   `name` VARCHAR(30) COMMENT '姓名',
-  `sex` VARCHAR(4) COMMENT '性别',
+  `sex` enum('男', '女') COMMENT '性别',
   `age` INT COMMENT '年龄',
   `flag` INT COMMENT '标记用户类型',
   PRIMARY KEY (id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '用户表';
+#RBAC_END
+
+#RELATION
+
+DROP TABLE IF EXISTS intepen_elder_family;
+CREATE TABLE intepen_elder_family(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `elder_id` INT NOT NULL COMMENT '老人ID',
+  `family_id` INT NOT NULL COMMENT '家属ID',
+  CONSTRAINT ElderFamily_PK PRIMARY KEY(elder_id, family_id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '老人家属关联表';

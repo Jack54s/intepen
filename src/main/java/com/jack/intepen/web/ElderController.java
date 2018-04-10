@@ -43,16 +43,70 @@ public class ElderController {
     }
 
     @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
-    private IntepenResult<Elder> queryElder(@PathVariable(value = "id") Integer id ){
+    private IntepenResult<Elder> queryElderById(@PathVariable(value = "id") Integer id ){
 
         logger.info("------------------GET:/elder/profile-----------------");
 
-        Elder elder = elderService.getElderById(id);
-        if(elder != null){
-            return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elder);
+        if(id == null && id <= 0){
+            return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
         }
         else{
-            return new IntepenResult<>(ElderEnum.QUERY_ELDER_ERROR.getCode(), ElderEnum.QUERY_ELDER_ERROR.getError());
+            Elder elder = elderService.getElderById(id);
+            if(elder != null){
+                return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elder);
+            }
+            else{
+                return new IntepenResult<>(ElderEnum.QUERY_ELDER_ERROR.getCode(), ElderEnum.QUERY_ELDER_ERROR.getError());
+            }
+        }
+    }
+
+    @RequestMapping(value = "/search/{name}", method = RequestMethod.GET)
+    private IntepenResult<List> queryElderByName(@PathVariable(value = "name") String name ){
+
+        logger.info("------------------GET:/elder/search-----------------");
+
+        if(name == null && "".equals(name)){
+            return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
+        }
+        else {
+            List<Elder> elders = elderService.getElderByName(name);
+            if(elders != null){
+                return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
+            }
+            else{
+                return new IntepenResult<>(ElderEnum.QUERY_ELDER_ERROR.getCode(), ElderEnum.QUERY_ELDER_ERROR.getError());
+            }
+        }
+    }
+
+    @RequestMapping(value = "/undistributed", method = RequestMethod.GET)
+    private IntepenResult<List> getUndistributedElder(){
+
+        logger.info("------------------GET:/elder/undistributed-----------------");
+
+        List<Elder> elders = elderService.getUndistributedElder();
+
+        if(elders != null){
+            return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
+        }
+        else{
+            return new IntepenResult<>(ElderEnum.QUERY_UNDISTRIBUTED_ELDER.getCode(), ElderEnum.QUERY_UNDISTRIBUTED_ELDER.getError());
+        }
+    }
+
+    @RequestMapping(value = "/distribute", method = RequestMethod.POST)
+    private IntepenResult<Boolean> distributeNurse(@RequestBody Map<String, Integer> map){
+
+        logger.info("-----------------POST:/elder/distribute--------------------");
+
+        boolean success = elderService.distributeNurse(map.get("id"), map.get("nurseId"));
+
+        if(success){
+            return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), AuthcEnum.SUCCESS.getError());
+        }
+        else{
+            return new IntepenResult<>(ElderEnum.DISTRIBUTE_NURSE_ERROR.getCode(), ElderEnum.DISTRIBUTE_NURSE_ERROR.getError());
         }
     }
 

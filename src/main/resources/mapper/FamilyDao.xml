@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jack.intepen.dao.FamilyDao">
+    <select id="queryFamily" resultType="com.jack.intepen.entity.Family">
+        SELECT id, account, password, salt
+        FROM intepen_sys_user
+        WHERE flag = 2
+    </select>
     <select id="queryFamilyById" resultType="com.jack.intepen.entity.Family">
         SELECT id, account, password, salt
         FROM intepen_sys_user
