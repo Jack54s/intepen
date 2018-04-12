@@ -4,11 +4,14 @@ import com.jack.intepen.dao.RBAC.SysUserDao;
 import com.jack.intepen.entity.Family;
 import com.jack.intepen.entity.RBAC.SysUser;
 import com.jack.intepen.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +37,17 @@ public class LoginRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
-        Set<String> roles = new HashSet<>();
+        Set<String> roles;
         String account = (String)principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         roles = userService.getRoles(account);
         authorizationInfo.setRoles(roles);
         authorizationInfo.setStringPermissions(userService.getPermissions(account));
+
+        Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+
+        session.setAttribute("role", roles);
         return authorizationInfo;
     }
 

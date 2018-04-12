@@ -73,6 +73,7 @@ public class AuthenticationController {
         }
 
         Session session = currentUser.getSession();
+        session.setAttribute("id", user.getId());
         session.setAttribute("account", account.get("account"));
 
         return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), user);

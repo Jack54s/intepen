@@ -1,18 +1,19 @@
 package com.jack.intepen.web;
 
 import com.jack.intepen.dto.IntepenResult;
+import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.Family;
 import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.FamilyEnum;
 import com.jack.intepen.service.FamilyService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class FamilyController {
     FamilyService familyService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    private IntepenResult<List> listNurse(){
+    private IntepenResult<List> listFamily(){
 
         logger.info("------------------GET:/family/list-----------------");
 
@@ -53,6 +54,46 @@ public class FamilyController {
         }
         else{
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), family);
+        }
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    private IntepenResult<Boolean> addFamily(@RequestBody Family family){
+
+        logger.info("------------------Post:/family/add------------------");
+
+        Subject currentUser = SecurityUtils.getSubject();
+
+        if(!currentUser.isPermitted("family:add")){
+            return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
+        }
+
+        boolean success = familyService.addFamily(family);
+
+        if(success){
+            return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), AuthcEnum.SUCCESS.getError());
+        }
+        else{
+            return new IntepenResult<>(FamilyEnum.ADD_ERROR.getCode(), FamilyEnum.ADD_ERROR.getError());
+        }
+    }
+
+    @RequestMapping(value = "/elders", method = RequestMethod.GET)
+    private IntepenResult<List> getEldersByFamily(HttpServletRequest request){
+
+        logger.info("------------------GET:/family/elders----------------");
+
+        Integer familyId = (Integer) request.getSession().getAttribute("id");
+
+        List<Elder> elders = familyService.getEldersByFamilyId(familyId);
+        if(elders == null){
+            return new IntepenResult<>(AuthcEnum.ERROR.getCode(), AuthcEnum.ERROR.getError());
+        }
+        else if(elders.size() == 0){
+            return new IntepenResult<>(FamilyEnum.NO_ELDERS.getCode(), FamilyEnum.NO_ELDERS.getError());
+        }
+        else{
+            return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
         }
     }
 }

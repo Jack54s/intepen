@@ -5,6 +5,7 @@ import com.jack.intepen.dao.RBAC.SysPermissionsDao;
 import com.jack.intepen.dao.RBAC.SysRolePermissionDao;
 import com.jack.intepen.dao.RBAC.SysRolesDao;
 import com.jack.intepen.dao.RBAC.SysUserRoleDao;
+import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.Nurse;
 import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.service.UserInterface.SysUserService;
@@ -130,6 +131,9 @@ public class NurseService implements SysUserService {
         }
     }
 
+    public List<Elder> getElderByNurse(int nurseId){
+        return nurseDao.queryElderByNurse(nurseId);
+    }
 
     public Set<String> getRoles(String account){
 

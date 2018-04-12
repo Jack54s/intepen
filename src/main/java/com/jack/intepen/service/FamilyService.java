@@ -1,10 +1,13 @@
 package com.jack.intepen.service;
 
+import com.jack.intepen.dao.ElderDao;
+import com.jack.intepen.dao.ElderFamilyDao;
 import com.jack.intepen.dao.FamilyDao;
 import com.jack.intepen.dao.RBAC.SysPermissionsDao;
 import com.jack.intepen.dao.RBAC.SysRolePermissionDao;
 import com.jack.intepen.dao.RBAC.SysRolesDao;
 import com.jack.intepen.dao.RBAC.SysUserRoleDao;
+import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.Family;
 import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.service.UserInterface.SysUserService;
@@ -15,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by 11407 on 3/003.
@@ -42,6 +42,12 @@ public class FamilyService implements SysUserService {
 
     @Autowired
     private SysPermissionsDao sysPermissionsDao;
+
+    @Autowired
+    private ElderFamilyDao elderFamilyDao;
+
+    @Autowired
+    private ElderDao elderDao;
 
     public List<Family> getFamilyList(){ return familyDao.queryFamily(); }
 
@@ -123,6 +129,28 @@ public class FamilyService implements SysUserService {
         }
         else{
             throw new RuntimeException("家属ID不能为空！");
+        }
+    }
+
+    public List<Elder> getEldersByFamilyId(int id){
+
+        logger.info("-------------------getElderByFamilyId-----------------");
+
+        List<Elder> elders = new LinkedList();
+        if(id > 0 ){
+            try{
+                List<Integer> elderIds = elderFamilyDao.queryElderIdByFamilyId(id);
+                for(Integer elderId : elderIds){
+                    elders.add(elderDao.queryElderById(elderId));
+                }
+                return elders;
+            }
+            catch (Exception e) {
+                throw new RuntimeException("获取老人信息失败：" + e.getMessage());
+            }
+        }
+        else{
+            throw new RuntimeException("家属ID错误！");
         }
     }
 

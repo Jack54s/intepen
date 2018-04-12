@@ -1,6 +1,7 @@
 package com.jack.intepen.web;
 
 import com.jack.intepen.dto.IntepenResult;
+import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.Nurse;
 import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.NurseEnum;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +68,23 @@ public class NurseController {
         }
         else{
             return new IntepenResult<>(NurseEnum.QUERY_NURSE_ERROR.getCode(), NurseEnum.QUERY_NURSE_ERROR.getError());
+        }
+    }
+
+    @RequestMapping(value = "/elders", method = RequestMethod.GET)
+    private IntepenResult<List> getEldersByNurse(HttpServletRequest request){
+
+        logger.info("------------------GET:/nurse/elders-----------------");
+
+        Integer nurseId = (Integer)request.getSession().getAttribute("id");
+
+        List<Elder> elders = nurseService.getElderByNurse(nurseId);
+
+        if(elders != null){
+            return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
+        }
+        else{
+            return new IntepenResult<>(NurseEnum.QUERY_ELDER_NURSED.getCode(), NurseEnum.QUERY_ELDER_NURSED.getError());
         }
     }
 

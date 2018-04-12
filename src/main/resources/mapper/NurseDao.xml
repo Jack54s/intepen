@@ -40,4 +40,10 @@
         FROM intepen_sys_user
         WHERE flag = 1
     </select>
+    <select id="queryElderByNurse" resultType="com.jack.intepen.entity.Elder">
+        SELECT id, name, sex, age
+        FROM intepen_elder
+        WHERE
+        nurse_id = #{nurseId}
+    </select>
 </mapper>
