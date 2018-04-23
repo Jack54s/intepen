@@ -7,37 +7,37 @@
         SELECT *
         FROM intepen_sys_user
         WHERE
-        id = #{id}
+        id = #{id} AND flag = 1
     </select>
     <select id="queryNurseByAccount" resultType="com.jack.intepen.entity.Nurse">
         SELECT *
         FROM intepen_sys_user
         WHERE
-        account = #{account}
+        account = #{account} AND flag = 1
     </select>
     <select id="queryNurseByName" resultType="com.jack.intepen.entity.Nurse">
         SELECT *
         FROM intepen_sys_user
         WHERE
-        name = #{name}
+        name = #{name} AND flag = 1
     </select>
     <select id="queryNurseProfileById" resultType="com.jack.intepen.vo.NurseProfile">
         SELECT id, name, sex, age, rate, time, avatar, introduction, evaluation
         FROM intepen_sys_user
         WHERE
-        id = #{id}
+        id = #{id} AND flag = 1
     </select>
     <select id="queryNurseProfileByAccount" resultType="com.jack.intepen.vo.NurseProfile">
         SELECT id, name, sex, age, rate, time, avatar, introduction, evaluation
         FROM intepen_sys_user
         WHERE
-        account = #{account}
+        account = #{account} AND flag = 1
     </select>
     <select id="queryNurseProfileByName" resultType="com.jack.intepen.vo.NurseProfile">
         SELECT id, name, sex, age, rate, time, avatar, introduction, evaluation
         FROM intepen_sys_user
         WHERE
-        name = #{name}
+        name = #{name} AND flag = 1
     </select>
     <insert id="insertNurse" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.Nurse">
@@ -48,7 +48,7 @@
         UPDATE intepen_sys_user
         SET name = #{name}, sex = #{sex}, age = #{age}, rate = #{rate}, time = #{time}, avatar = #{avatar},
         introduction = #{introduction}, evaluation = #{evaluation}
-        WHERE id = #{id}
+        WHERE id = #{id} AND flag = 1
     </update>
     <delete id="deleteNurse">
         DELETE FROM intepen_sys_user

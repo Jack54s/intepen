@@ -95,25 +95,6 @@ public class AuthenticationController {
         return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), userToken);
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ApiOperation(value = "/register", notes = "注册一个家人")
-    private IntepenResult<Family> register(@ApiParam(value = "一个存储username和password的Map", required = true)
-                                               @RequestBody Map<String, String> account){
-
-        logger.info("---------------------POST:/register---------------------");
-
-        if(familyService.getFamilyByAccount(account.get("account")) != null){
-            return new IntepenResult<>(AuthcEnum.ACCOUNT_EXISTS.getCode(), AuthcEnum.ACCOUNT_EXISTS.getError());
-        }
-        else{
-            Family family = new Family();
-            family.setAccount(account.get("account"));
-            family.setPassword(account.get("password"));
-            familyService.addFamily(family);
-            return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), familyService.getFamilyByAccount(account.get("account")));
-        }
-    }
-
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ApiOperation(value = "/logout", notes = "注销")
     private IntepenResult logout(){

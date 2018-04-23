@@ -111,6 +111,7 @@ CREATE TABLE intepen_patient_statistic(
 DROP TABLE IF EXISTS intepen_inspection;
 CREATE TABLE intepen_inspection(
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `elder_id` INT NOT NULL COMMENT '老人ID',
   `temperature` INT COMMENT '体温',
   `blood_pressure` VARCHAR(10) COMMENT '血压',
   `illness_id` INT COMMENT '病名ID',

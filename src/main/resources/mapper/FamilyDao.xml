@@ -18,7 +18,7 @@
         SELECT id, account, password, salt
         FROM intepen_sys_user
         WHERE
-        account = #{account}
+        account = #{account} AND flag = 2
     </select>
     <insert id="insertFamily" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.Family">
@@ -28,7 +28,7 @@
     <update id="updateFamily" parameterType="com.jack.intepen.entity.Family">
         UPDATE intepen_sys_user
         SET password = #{password}
-        WHERE id = #{id}
+        WHERE id = #{id} AND flag = 2
     </update>
     <delete id="deleteFamily">
         DELETE FROM intepen_sys_user

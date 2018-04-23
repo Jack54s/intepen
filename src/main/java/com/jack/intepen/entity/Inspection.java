@@ -8,6 +8,7 @@ import java.sql.Date;
 public class Inspection {
 
     private Integer id;
+    private Integer elderId;
     private Integer temperature;
     private String bloodPressure;
     private Integer illnessId;
@@ -20,6 +21,14 @@ public class Inspection {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getElderId() {
+        return elderId;
+    }
+
+    public void setElderId(Integer elderId) {
+        this.elderId = elderId;
     }
 
     public Integer getTemperature() {

@@ -27,7 +27,7 @@ import java.util.function.BooleanSupplier;
  */
 @RestController
 @RequestMapping("/elder")
-@Api(value = "/elder", description = "Elder相关的API")
+@Api(value = "elder", description = "Elder相关的API")
 public class ElderController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());

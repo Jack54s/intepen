@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.InspectionDao">
+
+    <insert id="insertInspection" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.Inspection">
+        INSERT INTO intepen_inspection(elder_id, temperature, blood_pressure, illness_id, record, date)
+        VALUES (#{elderId}, #{temperature}, #{bloodPressure}, #{illnessId}, #{record}, #{date})
+    </insert>
+
+    <delete id="deleteInspection">
+        DELETE FROM intepen_inspection
+        WHERE
+        id = #{id}
+    </delete>
+
+    <update id="updateInspection" parameterType="com.jack.intepen.entity.Inspection">
+        UPDATE intepen_inspection
+        SET elder_id = #{elderId}, temperature = #{temperature}, blood_pressure = #{bloodPressure},
+        illness_id = #{illnessId}, record = #{record}, date = #{date}
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="queryInspectionByElderId" resultType="com.jack.intepen.entity.Inspection">
+        SELECT *
+        FROM intepen_inspection
+        WHERE
+        elder_id = #{elderId}
+    </select>
+
+    <select id="queryInspectionByDate" resultType="com.jack.intepen.entity.Inspection">
+        SELECT *
+        FROM intepen_inspection
+        WHERE
+        date = #{date}
+    </select>
+</mapper>

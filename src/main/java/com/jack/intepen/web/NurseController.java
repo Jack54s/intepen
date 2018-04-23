@@ -7,6 +7,9 @@ import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.NurseEnum;
 import com.jack.intepen.service.NurseService;
 import com.jack.intepen.vo.NurseProfile;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -24,6 +27,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/nurse")
+@Api(value = "nurse", description = "与护工相关的Api")
 public class NurseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -32,6 +36,7 @@ public class NurseController {
     private NurseService nurseService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ApiOperation(value = "/nurse/list", notes = "列出所有的护工")
     private IntepenResult<List> listNurse(){
 
         logger.info("------------------GET:/nurse/list-----------------");
@@ -46,7 +51,9 @@ public class NurseController {
     }
 
     @RequestMapping(value = "/profile/{account}", method = RequestMethod.GET)
-    private IntepenResult<Nurse> queryNurseByAccount(@PathVariable(value = "account") String account ){
+    @ApiOperation(value = "/nurse/profile", notes = "查询护工的信息")
+    private IntepenResult<Nurse> queryNurseByAccount(@ApiParam(value = "护工的账号", required = true)
+                                                         @PathVariable(value = "account") String account ){
 
         logger.info("------------------GET:/nurse/profile-----------------");
 
@@ -60,8 +67,9 @@ public class NurseController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    private IntepenResult<List> queryNurseByIdOrName(@RequestParam(value = "id", required = false) Integer id,
-                                                 @RequestParam(value = "name", required = false) String name){
+    @ApiOperation(value = "/nurse/search", notes = "按id或者姓名搜索")
+    private IntepenResult<List> queryNurseByIdOrName(@ApiParam(value = "护工id") @RequestParam(value = "id", required = false) Integer id,
+                                                 @ApiParam(value = "护工的姓名") @RequestParam(value = "name", required = false) String name){
 
         logger.info("------------------GET:/nurse/search-----------------");
 
@@ -103,6 +111,7 @@ public class NurseController {
     }
 
     @RequestMapping(value = "/elders", method = RequestMethod.GET)
+    @ApiOperation(value = "/nurse/elders", notes = "列出此护工护理的老人")
     private IntepenResult<List> getEldersByNurse(HttpServletRequest request){
 
         logger.info("------------------GET:/nurse/elders-----------------");
@@ -120,7 +129,9 @@ public class NurseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    private IntepenResult<Boolean> addNurse(@RequestBody Nurse nurse){
+    @ApiOperation(value = "/nurse/add", notes = "新增一个护工")
+    private IntepenResult<Boolean> addNurse(@ApiParam(value = "一个护工对象", required = true)
+                                                @RequestBody Nurse nurse){
 
         logger.info("------------------Post:/nurse/add------------------");
 
@@ -141,7 +152,9 @@ public class NurseController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    private IntepenResult<Boolean> editNurse(@RequestBody NurseProfile nurseProfile){
+    @ApiOperation(value = "/nurse/edit", notes = "编辑护工的信息")
+    private IntepenResult<Boolean> editNurse(@ApiParam(value = "护工的个人信息", required = true)
+                                                 @RequestBody NurseProfile nurseProfile){
 
         logger.info("------------------Post:/nurse/add------------------");
 
@@ -162,7 +175,8 @@ public class NurseController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    private IntepenResult<Boolean> deleteNurse(@RequestBody Map<String, Integer> id){
+    @ApiOperation(value = "/nurse/delete", notes = "删除一个护工")
+    private IntepenResult<Boolean> deleteNurse(@ApiParam(value = "护工id", required = true)@RequestBody Map<String, Integer> id){
 
         logger.info("------------------Post:/nurse/delete------------------");
 

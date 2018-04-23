@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 11407 on 20/020.
@@ -22,7 +23,7 @@ public class EventsService {
     }
 
     @Transactional
-    public boolean completedEvents(List<Integer> ids){
+    public boolean completedEvents(Set<Integer> ids){
         for(Integer id : ids){
             if(eventsDao.completedEvent(id) != 1){
                 return false;
