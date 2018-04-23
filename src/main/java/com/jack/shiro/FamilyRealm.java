@@ -1,53 +1,25 @@
-package com.jack.Shiro;
-
-import com.jack.intepen.dao.RBAC.SysUserDao;
-import com.jack.intepen.entity.Family;
-import com.jack.intepen.entity.RBAC.SysUser;
-import com.jack.intepen.service.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.jack.shiro;
 
 /**
  * Created by 11407 on 3/003.
  */
-@Repository
-public class LoginRealm extends AuthorizingRealm {
+/*@Repository
+public class FamilyRealm extends AuthorizingRealm {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    UserService userService;
-
-    @Autowired
-    private SysUserDao sysUserDao;
+    FamilyService familyService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
-        Set<String> roles;
+        HashSet<String> roles = new HashSet<>();
+        roles.add("family");
         String account = (String)principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        roles = userService.getRoles(account);
         authorizationInfo.setRoles(roles);
-        authorizationInfo.setStringPermissions(userService.getPermissions(account));
-
-        Subject currentUser = SecurityUtils.getSubject();
-        Session session = currentUser.getSession();
-
-        session.setAttribute("role", roles);
+        authorizationInfo.setStringPermissions(familyService.getPermissions(account));
         return authorizationInfo;
     }
 
@@ -58,7 +30,7 @@ public class LoginRealm extends AuthorizingRealm {
      * @return
      * @throws AuthenticationException
      */
-    @Override
+/*    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String account;
@@ -81,14 +53,14 @@ public class LoginRealm extends AuthorizingRealm {
             throw new AuthenticationException("token为空！");
         }
 
-        SysUser user = sysUserDao.querySysUserByAccount(account);
+        Family family = familyService.getFamilyByAccount(account);
 
-        if(user == null){
+        if(family == null){
             throw new UnknownAccountException("无效的用户名！");
         }
         else{
 
-            if(password.equals(user.getPassword())){
+            if(password.equals(family.getPassword())){
                 SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(account, password, getName());
                 return info;
             }
@@ -97,4 +69,4 @@ public class LoginRealm extends AuthorizingRealm {
             }
         }
     }
-}
+}*/

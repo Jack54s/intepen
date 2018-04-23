@@ -1,7 +1,9 @@
 package com.jack.intepen.service;
 
 import com.jack.intepen.dao.ElderDao;
+import com.jack.intepen.dao.MedicalRecordDao;
 import com.jack.intepen.entity.Elder;
+import com.jack.intepen.entity.MedicalRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,9 @@ public class ElderService {
     @Autowired
     private ElderDao elderDao;
 
+    @Autowired
+    private MedicalRecordDao medicalRecordDao;
+
     public List<Elder> getElderList(){
         return elderDao.queryElder();
     }
@@ -26,6 +31,8 @@ public class ElderService {
     }
 
     public List<Elder> getElderByName(String name) { return elderDao.queryElderByName(name); }
+
+    public Elder getElderByIdCard(String idCard) { return elderDao.queryElderByIdCard(idCard); }
 
     @Transactional
     public boolean addElder(Elder elder){
@@ -109,5 +116,9 @@ public class ElderService {
         else{
             throw new RuntimeException("人员ID错误！");
         }
+    }
+
+    public List<MedicalRecord> getMedicalRecords(int elderId){
+        return medicalRecordDao.queryMedicalRecordByElderId(elderId);
     }
 }

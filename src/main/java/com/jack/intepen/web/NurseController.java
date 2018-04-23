@@ -6,6 +6,7 @@ import com.jack.intepen.entity.Nurse;
 import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.NurseEnum;
 import com.jack.intepen.service.NurseService;
+import com.jack.intepen.vo.NurseProfile;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,17 +59,46 @@ public class NurseController {
         }
     }
 
-    @RequestMapping(value = "/search/{name}", method = RequestMethod.GET)
-    private IntepenResult<List> queryNurseByName(@PathVariable(value = "name") String name ){
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    private IntepenResult<List> queryNurseByIdOrName(@RequestParam(value = "id", required = false) Integer id,
+                                                 @RequestParam(value = "name", required = false) String name){
 
         logger.info("------------------GET:/nurse/search-----------------");
 
-        List<Nurse> nurses = nurseService.getNurseByName(name);
-        if(nurses != null){
-            return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurses);
+        if(name == null && "".equals(name) && id == null){
+            return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
+        }
+        else if(name != null && !("".equals(name) ) && id != null && !("".equals(id))){
+            List<NurseProfile> nurseProfiles = new LinkedList<>();
+
+            NurseProfile nurseProfile = nurseService.getNurseProfileById(id);
+
+            if(nurseProfile.getName().equals(name)){
+                nurseProfiles.add(nurseProfile);
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurseProfiles);
+            }
+            else{
+                return new IntepenResult<>(NurseEnum.QUERY_NURSE_ERROR.getCode(), NurseEnum.QUERY_NURSE_ERROR.getError());
+            }
+        }
+        else if(name != null && !("".equals(name)) && id == null){
+            List<NurseProfile> nurseProfiles = nurseService.getNurseProfileByName(name);
+            if(nurseProfiles != null){
+                return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurseProfiles);
+            }
+            else{
+                return new IntepenResult<>(NurseEnum.QUERY_NURSE_ERROR.getCode(), NurseEnum.QUERY_NURSE_ERROR.getError());
+            }
+        }
+        else if((name == null || "".equals(name)) && id != null){
+            List<NurseProfile> nurseProfiles = new LinkedList<>();
+
+            nurseProfiles.add(nurseService.getNurseProfileById(id));
+
+            return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurseProfiles);
         }
         else{
-            return new IntepenResult<>(NurseEnum.QUERY_NURSE_ERROR.getCode(), NurseEnum.QUERY_NURSE_ERROR.getError());
+            return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
         }
     }
 
@@ -110,7 +141,7 @@ public class NurseController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    private IntepenResult<Boolean> editNurse(@RequestBody Nurse nurse){
+    private IntepenResult<Boolean> editNurse(@RequestBody NurseProfile nurseProfile){
 
         logger.info("------------------Post:/nurse/add------------------");
 
@@ -120,7 +151,7 @@ public class NurseController {
             return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
         }
 
-        boolean success = nurseService.modifyNurse(nurse);
+        boolean success = nurseService.modifyNurseProfile(nurseProfile);
 
         if(success){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), AuthcEnum.SUCCESS.getError());

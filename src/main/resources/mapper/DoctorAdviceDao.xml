@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.DoctorAdviceDao">
+
+    <insert id="insertDoctorAdvice" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.DoctorAdvice">
+        INSERT INTO intepen_doctor_advice(elder_id, start_date, end_date, medicine, time, dosage, note)
+        VALUES (#{elderId}, #{startDate}, #{endDate}, #{medicine}, #{time}, #{dosage}, #{note})
+    </insert>
+    
+    <delete id="deleteDoctorAdvice">
+        DELETE FROM intepen_doctor_advice
+        WHERE
+        id = #{id}
+    </delete>
+    
+    <update id="updateDoctorAdvice" parameterType="com.jack.intepen.entity.DoctorAdvice">
+        UPDATE intepen_doctor_advice
+        SET elder_id = #{elderId}, start_date = #{startDate}, end_date = #{endDate}, medicine = #{medicine},
+        time = #{time}, dosage = #{dosage}, note = #{note}
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="queryDoctorAdviceByElderId" resultType="com.jack.intepen.entity.DoctorAdvice">
+        SELECT *
+        FROM intepen_doctor_advice
+        WHERE
+        elder_id = #{elderId}
+    </select>
+</mapper>

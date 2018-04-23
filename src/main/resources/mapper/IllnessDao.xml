@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.IllnessDao">
+
+    <insert id="insertIllness" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.Illness">
+        INSERT INTO intepen_illness(illness_name)
+        VALUES (#{illnessName})
+    </insert>
+
+    <delete id="deleteIllness">
+        DELETE FROM intepen_illness
+        WHERE
+        id = #{id}
+    </delete>
+
+    <update id="updateIllness" parameterType="com.jack.intepen.entity.Illness">
+        UPDATE intepen_illness
+        SET illness_name = #{illnessName}
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="queryIllness" resultType="com.jack.intepen.entity.Illness">
+        SELECT *
+        FROM intepen_illness
+    </select>
+    
+    <select id="queryIllnessById" resultType="com.jack.intepen.entity.Illness">
+        SELECT *
+        FROM intepen_illness
+        WHERE
+        id = #{id}
+    </select>
+</mapper>

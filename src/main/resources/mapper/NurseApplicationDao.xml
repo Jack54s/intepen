@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.NurseApplicationDao">
+
+    <insert id="insertNurseApplication" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.NurseApplication">
+        INSERT INTO intepen_nurse_application(nurse_id, nurse_name, elder_id, elder_name, date, status)
+        VALUES (#{nurseId}, #{nurseName}, #{elderId}, #{elderName}, #{date}, #{status})
+    </insert>
+
+    <delete id="deleteNurseApplication">
+        DELETE FROM intepen_nurse_application
+        WHERE
+        id = #{id}
+    </delete>
+
+    <update id="updateNurseApplication" parameterType="com.jack.intepen.entity.NurseApplication">
+        UPDATE intepen_nurse_application
+        SET nurse_id = #{nurseId}, nurse_name = #{nurseName}, elder_id = #{elderId}, elder_name = #{elderName},
+        date = #{date}, status = #{status}
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="queryNurseApplication" resultType="com.jack.intepen.entity.NurseApplication">
+        SELECT *
+        FROM intepen_nurse_application
+    </select>
+</mapper>

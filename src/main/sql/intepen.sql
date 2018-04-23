@@ -9,8 +9,14 @@ DROP TABLE IF EXISTS intepen_elder;
 CREATE TABLE intepen_elder(
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '老人编号',
   `name` VARCHAR(30) NOT NULL COMMENT '姓名',
-  `sex` enum('男', '女') NOT NULL COMMENT '性别',
+  `sex` enum('男', '女') COMMENT '性别',
   `age` INT COMMENT '年龄',
+  `id_card` VARCHAR(30) COMMENT '身份证号',
+  `birthday` DATE COMMENT '生日',
+  `in_hospital` DATE COMMENT '住院日期',
+  `bed` VARCHAR (100) COMMENT '床位',
+  `tel` VARCHAR (15) COMMENT '手机',
+  `avatar` VARCHAR (100) COMMENT '头像地址',
   `nurse_id` INT COMMENT '分配的护工ID',
   PRIMARY KEY (id),
   CONSTRAINT NurseID_FK FOREIGN KEY(nurse_id) REFERENCES intepen_sys_user(id)
@@ -49,8 +55,8 @@ DROP TABLE IF EXISTS intepen_physical_examination_data;
 CREATE TABLE intepen_physical_examination_data(
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '体检数据编号',
   `elder_id` INT NOT NULL COMMENT '老人编号',
-  `height` INT COMMENT '身高',
-  `weight` INT COMMENT '体重',
+  `height` FLOAT(5,2) COMMENT '身高',
+  `weight` FLOAT(5,2) COMMENT '体重',
   PRIMARY KEY (id),
   CONSTRAINT ElderID_FK FOREIGN KEY(elder_id) REFERENCES intepen_elder(id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '体检数据表';
@@ -84,6 +90,34 @@ CREATE TABLE intepen_threshold(
   `threshold` INT COMMENT '阈值',
   PRIMARY KEY (id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '阈值表';
+
+DROP TABLE IF EXISTS intepen_illness;
+CREATE TABLE intepen_illness(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `illness_name` VARCHAR (100) NOT NULL COMMENT '病名',
+  PRIMARY KEY (id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '病名表';
+
+DROP TABLE IF EXISTS intepen_patient_statistic;
+CREATE TABLE intepen_patient_statistic(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `illness_id` INT NOT NULL COMMENT '病名ID',
+  `number_of_patient` INT NOT NULL COMMENT '生病人数',
+  `date` DATE COMMENT '日期',
+  PRIMARY KEY (id),
+  CONSTRAINT IllnessID_FK FOREIGN KEY(illness_id) REFERENCES intepen_illness(id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '病名表';
+
+DROP TABLE IF EXISTS intepen_inspection;
+CREATE TABLE intepen_inspection(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `temperature` INT COMMENT '体温',
+  `blood_pressure` VARCHAR(10) COMMENT '血压',
+  `illness_id` INT COMMENT '病名ID',
+  `record` TEXT COMMENT '详情',
+  `date` DATE COMMENT '日期',
+  PRIMARY KEY (id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '巡查表';
 
 -- DROP TABLE IF EXISTS intepen_family;
 -- CREATE TABLE intepen_family(
@@ -150,6 +184,11 @@ CREATE TABLE intepen_sys_user(
   `name` VARCHAR(30) COMMENT '姓名',
   `sex` enum('男', '女') COMMENT '性别',
   `age` INT COMMENT '年龄',
+  `rate` INT COMMENT '评分',
+  `time` INT COMMENT '工作经验',
+  `avatar` VARCHAR (100) COMMENT '头像地址',
+  `introduction` TEXT COMMENT '个人介绍',
+  `evaluation` TEXT COMMENT '评价',
   `flag` INT COMMENT '标记用户类型',
   PRIMARY KEY (id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '用户表';

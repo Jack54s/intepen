@@ -2,9 +2,13 @@ package com.jack.intepen.web;
 
 import com.jack.intepen.dto.IntepenResult;
 import com.jack.intepen.entity.Elder;
+import com.jack.intepen.entity.MedicalRecord;
 import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.ElderEnum;
 import com.jack.intepen.service.ElderService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -12,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
@@ -21,6 +27,7 @@ import java.util.function.BooleanSupplier;
  */
 @RestController
 @RequestMapping("/elder")
+@Api(value = "/elder", description = "Elder相关的API")
 public class ElderController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,12 +36,13 @@ public class ElderController {
     private ElderService elderService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ApiOperation(value = "/elder/list", notes = "列出所有的老人")
     private IntepenResult<List> listElder(){
 
         logger.info("------------------GET:/elder/list-----------------");
 
         List<Elder> list = elderService.getElderList();
-        if(list != null && list.size() != 0){
+        if(list != null){
             return  new IntepenResult<List>(AuthcEnum.SUCCESS.getCode(), list);
         }
         else{
@@ -43,7 +51,9 @@ public class ElderController {
     }
 
     @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
-    private IntepenResult<Elder> queryElderById(@PathVariable(value = "id") Integer id ){
+    @ApiOperation(value = "/elder/profile", notes = "查询某个老人信息")
+    private IntepenResult<Elder> queryElderById(@ApiParam(value = "老人的ID", required = true)
+                                                    @PathVariable(value = "id") Integer id ){
 
         logger.info("------------------GET:/elder/profile-----------------");
 
@@ -61,15 +71,35 @@ public class ElderController {
         }
     }
 
-    @RequestMapping(value = "/search/{name}", method = RequestMethod.GET)
-    private IntepenResult<List> queryElderByName(@PathVariable(value = "name") String name ){
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @ApiOperation(value = "/elder/search", notes = "按名字或者身份证号搜索一个老人")
+    private IntepenResult<List> queryElderByNameOrIdCard(@ApiParam(value = "身份证号") @RequestParam(value = "idCard", required = false) String idCard,
+                                                         @ApiParam(value = "名字") @RequestParam(value = "name", required = false) String name){
 
         logger.info("------------------GET:/elder/search-----------------");
 
-        if(name == null && "".equals(name)){
+        logger.info("--------------name:{},idCard:{}----------------", name, idCard);
+
+        if(name == null && "".equals(name) && idCard == null && "".equals(idCard)){
+            logger.info("--------------------if---------------------");
             return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
         }
-        else {
+        else if(name != null && !("".equals(name) ) && idCard != null && !("".equals(idCard))){
+            List<Elder> elders = new LinkedList<>();
+
+            Elder elder = elderService.getElderByIdCard(idCard);
+            if(elder == null){
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), new LinkedList());
+            }
+            if(elder.getName().equals(name)){
+                elders.add(elder);
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
+            }
+            else{
+                return new IntepenResult<>(ElderEnum.QUERY_ELDER_ERROR.getCode(), ElderEnum.QUERY_ELDER_ERROR.getError());
+            }
+        }
+        else if(name != null && !("".equals(name)) && (idCard == null || "".equals(idCard))){
             List<Elder> elders = elderService.getElderByName(name);
             if(elders != null){
                 return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
@@ -78,9 +108,26 @@ public class ElderController {
                 return new IntepenResult<>(ElderEnum.QUERY_ELDER_ERROR.getCode(), ElderEnum.QUERY_ELDER_ERROR.getError());
             }
         }
+        else if((name == null || "".equals(name)) && idCard != null && !("".equals(idCard))){
+            List<Elder> elders = new LinkedList<>();
+
+            Elder elder = elderService.getElderByIdCard(idCard);
+            if(elder == null){
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
+            }
+            else{
+                elders.add(elder);
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
+            }
+        }
+        else{
+            logger.info("--------------------else---------------------");
+            return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
+        }
     }
 
     @RequestMapping(value = "/undistributed", method = RequestMethod.GET)
+    @ApiOperation(value = "/elder/undistributed", notes = "查询未分配护工的老人")
     private IntepenResult<List> getUndistributedElder(){
 
         logger.info("------------------GET:/elder/undistributed-----------------");
@@ -96,7 +143,9 @@ public class ElderController {
     }
 
     @RequestMapping(value = "/distribute", method = RequestMethod.POST)
-    private IntepenResult<Boolean> distributeNurse(@RequestBody Map<String, Integer> map){
+    @ApiOperation(value = "/elder/distribute", notes = "为老人分配护工")
+    private IntepenResult<Boolean> distributeNurse(@ApiParam(value = "一个存储老人id和护工ID（nurseId）的Map", required = true)
+                                                       @RequestBody Map<String, Integer> map){
 
         logger.info("-----------------POST:/elder/distribute--------------------");
 
@@ -111,7 +160,9 @@ public class ElderController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    private IntepenResult<Boolean> addElder(@RequestBody Elder elder){
+    @ApiOperation(value = "/elder/add", notes = "增加一个老人")
+    private IntepenResult<Boolean> addElder(@ApiParam(value = "一个老人对象", required = true)
+                                                @RequestBody Elder elder){
 
         logger.info("------------------Post:/elder/add------------------");
 
@@ -132,7 +183,9 @@ public class ElderController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    private IntepenResult<Boolean> editElder(@RequestBody Elder elder){
+    @ApiOperation(value = "/elder/edit", notes = "编辑老人身份信息")
+    private IntepenResult<Boolean> editElder(@ApiParam(value = "一个老人对象", required = true)
+                                                 @RequestBody Elder elder){
 
         logger.info("------------------Post:/elder/add------------------");
 
@@ -153,7 +206,9 @@ public class ElderController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    private IntepenResult<Boolean> deleteElder(@RequestBody Map<String, Integer> id){
+    @ApiOperation(value = "/elder/delete", notes = "删除一个老人")
+    private IntepenResult<Boolean> deleteElder(@ApiParam(value = "老人id", required = true)
+                                                   @RequestBody Map<String, Integer> id){
 
         logger.info("------------------Post:/elder/delete------------------");
 
@@ -171,5 +226,21 @@ public class ElderController {
         else{
             return new IntepenResult<>(ElderEnum.DELETE_ERROR.getCode(), ElderEnum.DELETE_ERROR.getError());
         }
+    }
+
+    @RequestMapping(value = "/medicalrecord/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "/elder/medicalrecord", notes = "查询老人的病历")
+    private IntepenResult<List> getMedicalRecord(@ApiParam(value = "老人的id", required = true)
+                                                     @PathVariable(value = "id") Integer elderId){
+
+        logger.info("------------------GET:/elder/medicalrecord---------------");
+
+        List<MedicalRecord> medicalRecords = elderService.getMedicalRecords(elderId);
+
+        if(medicalRecords == null){
+            return new IntepenResult<>(ElderEnum.QUERY_MEDICAL_RECORD_ERROR.getCode(), ElderEnum.QUERY_MEDICAL_RECORD_ERROR.getError());
+        }
+
+        return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), medicalRecords);
     }
 }

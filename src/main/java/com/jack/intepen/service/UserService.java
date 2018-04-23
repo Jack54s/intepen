@@ -17,9 +17,6 @@ import java.util.Set;
 public class UserService implements SysUserService {
 
     @Autowired
-    private SysUserDao sysUserDao;
-
-    @Autowired
     private SysUserRoleDao sysUserRoleDao;
 
     @Autowired
@@ -31,17 +28,11 @@ public class UserService implements SysUserService {
     @Autowired
     private SysPermissionsDao sysPermissionsDao;
 
-    public Set<String> getRoles(String account){
+    public Set<String> getRoles(Integer userId){
 
-        SysUser user = sysUserDao.querySysUserByAccount(account);
-        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(user.getId());
+        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(userId);
         Set<String> roles = new HashSet<>();
-        if(user.getFlag() == 1){
-            roles.add("nurse");
-        }
-        else if(user.getFlag() == 2){
-            roles.add("family");
-        }
+
         for(Integer roleId : roleIds){
             SysRoles role = sysRolesDao.queryRoleById(roleId);
             roles.add(role.getRole());
@@ -49,10 +40,9 @@ public class UserService implements SysUserService {
         return roles;
     }
 
-    public Set<String> getPermissions(String account) {
+    public Set<String> getPermissions(Integer userId) {
 
-        SysUser user = sysUserDao.querySysUserByAccount(account);
-        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(user.getId());
+        Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(userId);
         Set<Integer> permissionIds = new HashSet<>();
         Set<String> permissions = new HashSet<>();
         for(Integer roleId : roleIds){

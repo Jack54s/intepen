@@ -28,7 +28,8 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<logback.version>1.2.3</logback.version>
 		<springloaded.version>1.2.8.RELEASE</springloaded.version>
-
+		<springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+		<springfox-swagger-ui.version>2.7.0</springfox-swagger-ui.version>
 
 	</properties>
 
@@ -61,7 +62,7 @@
 			<version>${c3p0.version}</version>
 		</dependency>
 
-		<!--Shiro 权限管理 -->
+		<!--shiro 权限管理 -->
 		<!-- shiro begin -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -102,6 +103,20 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
+
+		<!--Swagger API描述插件-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox-swagger2.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox-swagger-ui.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -4,29 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jack.intepen.dao.ElderDao">
     <select id="queryElder" resultType="com.jack.intepen.entity.Elder">
-        SELECT id, name, sex, age
+        SELECT *
         FROM intepen_elder
     </select>
     <select id="queryElderById" resultType="com.jack.intepen.entity.Elder">
-        SELECT id, name, sex, age
+        SELECT *
         FROM intepen_elder
         WHERE 
         id = #{id}
     </select>
     <select id="queryUndistributedElder" resultType="com.jack.intepen.entity.Elder">
-        SELECT id, name, sex, age
+        SELECT *
         FROM intepen_elder
         WHERE
         nurse_id IS NULL
     </select>
     <insert id="insertElder" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.Elder">
-        INSERT INTO intepen_elder(name, sex, age)
-        VALUES (#{name}, #{sex}, #{age})
+        INSERT INTO intepen_elder(name, sex, age, id_card, birthday, in_hospital, bed, tel, avatar, nurse_id)
+        VALUES (#{name}, #{sex}, #{age}, #{idCard}, #{birthday}, #{inHospital}, #{bed}, #{tel}, #{avatar}, #{nurseId})
     </insert>
     <update id="updateElder" parameterType="com.jack.intepen.entity.Elder">
         UPDATE intepen_elder
-        SET name = #{name}, sex = #{sex}, age = #{age}
+        SET name = #{name}, sex = #{sex}, age = #{age}, id_card = #{idCard}, birthday = #{birthday}, in_hospital = #{inHospital},
+        bed = #{bed}, tel = #{tel}, avatar = #{avatar}, nurse_id = #{nurseId}
         WHERE id = #{id}
     </update>
     <update id="distributeNurse">
@@ -39,9 +40,15 @@
         WHERE id = #{id}
     </delete>
     <select id="queryElderByName" resultType="com.jack.intepen.entity.Elder">
-        SELECT id, name, sex, age
+        SELECT *
         FROM intepen_elder
         WHERE
         name = #{name}
+    </select>
+    <select id="queryElderByIdCard" resultType="com.jack.intepen.entity.Elder">
+        SELECT *
+        FROM intepen_elder
+        WHERE
+        id_card = #{idCard}
     </select>
 </mapper>

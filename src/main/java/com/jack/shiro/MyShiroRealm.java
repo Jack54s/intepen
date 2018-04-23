@@ -1,14 +1,4 @@
-package com.jack.Shiro;
-
-import com.jack.intepen.service.UserInterface.SysUserService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
+package com.jack.shiro;
 
 /**
  * Created by 11407 on 3/003.

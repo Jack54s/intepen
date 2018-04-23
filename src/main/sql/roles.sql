@@ -1,0 +1,13 @@
+insert into intepen_sys_roles(id, role, description) values(1, 'admin', '超级管理员');
+insert into intepen_sys_roles(id, role, description) values(2, 'userDetail', '病人信息');
+insert into intepen_sys_roles(id, role, description) values(3, 'service', '服务');
+insert into intepen_sys_roles(id, role, description) values(4, 'statistic', '统计信息');
+insert into intepen_sys_roles(id, role, description) values(5, 'inspection', '巡查结果');
+insert into intepen_sys_roles(id, role, description) values(6, 'elderManagement', '老人管理');
+insert into intepen_sys_roles(id, role, description) values(7, 'nurseManagement', '护士管理');
+insert into intepen_sys_roles(id, role, description) values(8, 'detail', '老人、护士详细信息');
+insert into intepen_sys_roles(id, role, description) values(9, 'documentation', '健康管理');
+insert into intepen_sys_roles(id, role, description) values(10, 'relation', '关联家属');
+insert into intepen_sys_roles(id, role, description) values(11, 'notification', '通知列表');
+insert into intepen_sys_roles(id, role, description) values(12, 'permission', '权限管理');
+insert into intepen_sys_roles(id, role, description) values(13, 'settings', '设置');

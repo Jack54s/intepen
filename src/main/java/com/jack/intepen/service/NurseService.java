@@ -10,6 +10,7 @@ import com.jack.intepen.entity.Nurse;
 import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.service.UserInterface.SysUserService;
 import com.jack.intepen.util.EncryptionUtils;
+import com.jack.intepen.vo.NurseProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,12 @@ public class NurseService implements SysUserService {
 
     public List<Nurse> getNurseByName(String name) { return nurseDao.queryNurseByName(name); }
 
+    public NurseProfile getNurseProfileByAccount(String account) { return nurseDao.queryNurseProfileByAccount(account); }
+
+    public NurseProfile getNurseProfileById(int id) { return nurseDao.queryNurseProfileById(id); }
+
+    public List<NurseProfile> getNurseProfileByName(String name) { return nurseDao.queryNurseProfileByName(name);}
+
     @Transactional
     public boolean addNurse(Nurse nurse){
 
@@ -84,13 +91,13 @@ public class NurseService implements SysUserService {
         }
     }
 
-    public boolean modifyNurse(Nurse nurse){
+    public boolean modifyNurseProfile(NurseProfile nurseProfile){
 
         logger.info("--------------------------modifyNurse----------------------");
 
-        if(nurse.getId() != null && !"".equals(nurse.getId())){
+        if(nurseProfile.getId() != null && !"".equals(nurseProfile.getId())){
             try{
-                int effectNum = nurseDao.updateNurse(nurse);
+                int effectNum = nurseDao.updateNurseProfile(nurseProfile);
                 if(effectNum > 0 ){
                     return true;
                 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.MedicalRecordDao">
+
+    <insert id="insertMedicalRecord" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.MedicalRecord">
+        INSERT INTO intepen_medical_record(hospital, admission_date, record_date, history_of_present_illness, history_of_past_illness,
+        history_of_personal_illness, history_of_family_illness, elder_id)
+        VALUES (#{hospital}, #{admissionDate}, #{recordDate}, #{historyOfPresentIllness}, #{historyOfPastIllness},
+        #{historyOfPersonalIllness}, #{historyOfFamilyIllness}, #{elderId})
+    </insert>
+
+    <delete id="deleteMedicalRecord">
+        DELETE FROM intepen_medical_record
+        WHERE
+        id = #{id}
+    </delete>
+
+    <update id="updateMedicalRecord" parameterType="com.jack.intepen.entity.MedicalRecord">
+        UPDATE intepen_medical_record
+        SET hospital = #{hospital}, admission_date = #{admissionDate}, record_date = #{recordDate}, history_of_present_illness = #{historyOfPresentIllness},
+        history_of_past_illness = #{historyOfPastIllness}, history_of_personal_illness = #{historyOfPersonalIllness},
+        history_of_family_illness = #{historyOfFamilyIllness}, elder_id = #{elderId}
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="queryMedicalRecordByElderId" resultType="com.jack.intepen.entity.MedicalRecord">
+        SELECT *
+        FROM intepen_medical_record
+        WHERE
+        elder_id = #{elderId}
+    </select>
+</mapper>

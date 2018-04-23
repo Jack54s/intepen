@@ -1,39 +1,67 @@
-package com.jack.Shiro;
+package com.jack.shiro;
 
-import com.jack.intepen.entity.Nurse;
-import com.jack.intepen.service.NurseService;
+import com.jack.intepen.dao.RBAC.SysUserDao;
+import com.jack.intepen.entity.RBAC.SysUser;
+import com.jack.intepen.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by 11407 on 5/005.
+ * Created by 11407 on 3/003.
  */
-/*public class NurseRealm extends AuthorizingRealm {
+@Repository
+public class LoginRealm extends AuthorizingRealm {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    NurseService nurseService;
+    UserService userService;
 
+    @Autowired
+    private SysUserDao sysUserDao;
+
+    /**
+     * 用于授权
+     * @param principals
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
         Set<String> roles = new HashSet<>();
         String account = (String)principals.getPrimaryPrincipal();
+        SysUser user = sysUserDao.querySysUserByAccount(account);
+        if(user.getFlag() == 1){
+            roles.add("nurse");
+        }
+        else if(user.getFlag() == 2){
+            roles.add("family");
+        }
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        roles.add("nurse");
-        roles.addAll(nurseService.getRoles(account));
+        roles.addAll(userService.getRoles(user.getId()));
         authorizationInfo.setRoles(roles);
-        authorizationInfo.setStringPermissions(nurseService.getPermissions(account));
+        Set<String> permissions;
+        permissions = userService.getPermissions(user.getId());
+        authorizationInfo.setStringPermissions(permissions);
+
+        Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+
+        session.setAttribute("role", roles);
+        session.setAttribute("permissions", permissions);
         return authorizationInfo;
     }
 
@@ -44,7 +72,7 @@ import java.util.Set;
      * @return
      * @throws AuthenticationException
      */
-/*    @Override
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String account;
@@ -67,14 +95,14 @@ import java.util.Set;
             throw new AuthenticationException("token为空！");
         }
 
-        Nurse nurse = nurseService.getNurseByAccount(account);
+        SysUser user = sysUserDao.querySysUserByAccount(account);
 
-        if(nurse == null){
+        if(user == null){
             throw new UnknownAccountException("无效的用户名！");
         }
         else{
 
-            if(password.equals(nurse.getPassword())){
+            if(password.equals(user.getPassword())){
                 SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(account, password, getName());
                 return info;
             }
@@ -83,4 +111,4 @@ import java.util.Set;
             }
         }
     }
-}*/
+}

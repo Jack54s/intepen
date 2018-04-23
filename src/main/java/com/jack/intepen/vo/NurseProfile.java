@@ -1,14 +1,11 @@
-package com.jack.intepen.entity;
+package com.jack.intepen.vo;
 
 /**
- * Created by 11407 on 2/002.
+ * Created by 11407 on 16/016.
  */
-public class Nurse {
+public class NurseProfile {
 
     private Integer id;
-    private String account;
-    private String password;
-    private String salt;
     private String name;
     private String sex;
     private Integer age;
@@ -24,30 +21,6 @@ public class Nurse {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     public String getName() {

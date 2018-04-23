@@ -10,7 +10,8 @@ public enum ElderEnum {
     EDIT_ERROR(203, "编辑老人信息失败！"),
     DELETE_ERROR(204, "删除老人信息失败！"),
     QUERY_UNDISTRIBUTED_ELDER(205, "获取未分配护工老人失败！"),
-    DISTRIBUTE_NURSE_ERROR(206, "分配护工失败！")
+    DISTRIBUTE_NURSE_ERROR(206, "分配护工失败！"),
+    QUERY_MEDICAL_RECORD_ERROR(207, "查询病历失败！")
     ;
 
     private int code;

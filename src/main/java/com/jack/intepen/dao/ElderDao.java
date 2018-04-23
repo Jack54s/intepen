@@ -15,6 +15,7 @@ public interface ElderDao {
     List<Elder> queryElder();
     Elder queryElderById(int id);
     List<Elder> queryElderByName(String name);
+    Elder queryElderByIdCard(String idCard);
     List<Elder> queryUndistributedElder();
     int insertElder(Elder elder);
     int updateElder(Elder elder);
