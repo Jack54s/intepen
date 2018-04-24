@@ -29,8 +29,6 @@ public class ThresholdConfigurationInitialler{
 
     public void initialThresholdConfig(){
 
-        logger.info("-----------thresholdList:{}------------", thresholdList);
-
         for(Threshold threshold : thresholdList){
             thresholdConfiguration.thresholdMap.put(threshold.getItem(), threshold.getThreshold());
         }

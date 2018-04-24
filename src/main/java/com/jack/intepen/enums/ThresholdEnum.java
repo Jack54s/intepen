@@ -6,6 +6,8 @@ package com.jack.intepen.enums;
 public enum ThresholdEnum {
     LIST_ALL_THRESHOLD_ERROR(600, "列出所有的阈值失败！"),
     ADD_ERROR(601, "增加一个阈值项失败！"),
+    EDIT_ERROR(602, "编辑阈值失败！"),
+    DELETE_ERROR(603, "删除一个阈值失败！"),
     ;
 
     private int code;

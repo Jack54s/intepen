@@ -58,7 +58,7 @@ public class ThresholdService {
                     return true;
                 }
                 else{
-                    throw new RuntimeException("更新阈值失败！");
+                    throw new RuntimeException("受影响行数为0");
                 }
             }
             catch (Exception e){
