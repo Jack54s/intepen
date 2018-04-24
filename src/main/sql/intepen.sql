@@ -86,7 +86,7 @@ CREATE TABLE intepen_nurse_application(
 DROP TABLE IF EXISTS intepen_threshold;
 CREATE TABLE intepen_threshold(
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `item` VARCHAR (100) NOT NULL COMMENT '数据项',
+  `item` VARCHAR (100) NOT NULL UNIQUE COMMENT '数据项',
   `threshold` INT COMMENT '阈值',
   PRIMARY KEY (id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '阈值表';

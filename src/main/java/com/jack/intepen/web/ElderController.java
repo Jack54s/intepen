@@ -16,11 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 
 /**
  * Created by 11407 on 30/030.
@@ -43,7 +41,7 @@ public class ElderController {
 
         List<Elder> list = elderService.getElderList();
         if(list != null){
-            return  new IntepenResult<List>(AuthcEnum.SUCCESS.getCode(), list);
+            return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
         else{
             return new IntepenResult<>(ElderEnum.LIST_ELDER_ERROR.getCode(), ElderEnum.LIST_ELDER_ERROR.getError());
@@ -85,11 +83,11 @@ public class ElderController {
             return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
         }
         else if(name != null && !("".equals(name) ) && idCard != null && !("".equals(idCard))){
-            List<Elder> elders = new LinkedList<>();
+            List<Elder> elders = new ArrayList<>();
 
             Elder elder = elderService.getElderByIdCard(idCard);
             if(elder == null){
-                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), new LinkedList());
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), new ArrayList());
             }
             if(elder.getName().equals(name)){
                 elders.add(elder);
@@ -109,7 +107,7 @@ public class ElderController {
             }
         }
         else if((name == null || "".equals(name)) && idCard != null && !("".equals(idCard))){
-            List<Elder> elders = new LinkedList<>();
+            List<Elder> elders = new ArrayList<>();
 
             Elder elder = elderService.getElderByIdCard(idCard);
             if(elder == null){

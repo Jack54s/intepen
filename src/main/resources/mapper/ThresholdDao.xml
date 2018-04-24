@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.ThresholdDao">
+
+    <insert id="insertThreshold" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.jack.intepen.entity.Threshold">
+        INSERT INTO intepen_threshold(item, threshold)
+        VALUES (#{item}, #{threshold})
+    </insert>
+
+    <delete id="deleteThreshold">
+        DELETE FROM intepen_threshold
+        WHERE
+        id = #{id}
+    </delete>
+
+    <update id="updateThreshold" parameterType="com.jack.intepen.entity.Threshold">
+        UPDATE intepen_threshold
+        SET item = #{item}, threshold = #{threshold}
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="queryAllThreshold" resultType="com.jack.intepen.entity.Threshold">
+        SELECT *
+        FROM intepen_threshold
+    </select>
+
+    <select id="queryThresholdById" resultType="com.jack.intepen.entity.Threshold">
+        SELECT *
+        FROM intepen_threshold
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="queryThresholdByItem" resultType="com.jack.intepen.entity.Threshold">
+        SELECT *
+        FROM intepen_threshold
+        WHERE
+        item = #{item}
+    </select>
+</mapper>
