@@ -15,4 +15,9 @@
         WHERE
         id = #{id}
     </select>
+
+    <select id="queryRoles" resultType="com.jack.intepen.entity.RBAC.SysRoles">
+        SELECT id, role, description
+        FROM intepen_sys_roles
+    </select>
 </mapper>

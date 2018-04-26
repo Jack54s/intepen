@@ -29,4 +29,11 @@
         WHERE
         date = #{date}
     </select>
+
+    <select id="queryPatientStatisticByDateZone" resultType="com.jack.intepen.entity.PatientStatistic">
+        SELECT *
+        FROM intepen_patient_statistic
+        WHERE
+        date >= #{dateA} AND date &lt;= #{dateB}
+    </select>
 </mapper>

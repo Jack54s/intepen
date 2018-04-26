@@ -49,6 +49,11 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home(){
+        return "Intepen service is up!";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ApiOperation(value = "/login", notes = "登录，返回用户信息")
     private IntepenResult<Map<String, Object>> login(@ApiParam(value = "一个存储username和password的Map", required = true)

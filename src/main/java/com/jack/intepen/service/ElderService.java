@@ -79,13 +79,7 @@ public class ElderService {
     public boolean deleteElder(int id){
         if(id > 0){
             try{
-                int effectNum = elderDao.deleteElder(id);
-                if(effectNum > 0 ){
-                    return true;
-                }
-                else{
-                    throw new RuntimeException("删除老人信息失败！");
-                }
+                elderDao.deleteElder(id);
             }
             catch (Exception e){
                 throw new RuntimeException("删除老人信息失败：" + e.getMessage());
@@ -94,6 +88,7 @@ public class ElderService {
         else{
             throw new RuntimeException("老人ID不能为空！");
         }
+        return true;
     }
 
     public List<Elder> getUndistributedElder(){ return elderDao.queryUndistributedElder(); }

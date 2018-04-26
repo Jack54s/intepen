@@ -115,13 +115,7 @@ public class FamilyService implements SysUserService {
 
         if(id > 0){
             try{
-                int effectNum = familyDao.deleteFamily(id);
-                if(effectNum > 0 ){
-                    return true;
-                }
-                else{
-                    throw new RuntimeException("删除家属信息失败！");
-                }
+                familyDao.deleteFamily(id);
             }
             catch (Exception e){
                 throw new RuntimeException("删除家属信息失败：" + e.getMessage());
@@ -130,6 +124,7 @@ public class FamilyService implements SysUserService {
         else{
             throw new RuntimeException("家属ID不能为空！");
         }
+        return true;
     }
 
     public List<Elder> getEldersByFamilyId(int id){

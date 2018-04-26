@@ -121,13 +121,7 @@ public class NurseService implements SysUserService {
 
         if(id > 0){
             try{
-                int effectNum = nurseDao.deleteNurse(id);
-                if(effectNum > 0 ){
-                    return true;
-                }
-                else{
-                    throw new RuntimeException("删除护工信息失败！");
-                }
+                nurseDao.deleteNurse(id);
             }
             catch (Exception e){
                 throw new RuntimeException("删除护工信息失败：" + e.getMessage());
@@ -136,6 +130,7 @@ public class NurseService implements SysUserService {
         else{
             throw new RuntimeException("护工ID不能为空！");
         }
+        return true;
     }
 
     public List<Elder> getElderByNurse(int nurseId){

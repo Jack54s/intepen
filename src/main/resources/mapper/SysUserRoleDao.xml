@@ -15,4 +15,11 @@
         WHERE
         user_id = #{userId}
     </select>
+
+    <delete id="deleteUserRoles">
+        DELETE
+        FROM intepen_sys_user_role
+        WHERE
+        user_id = #{userId}
+    </delete>
 </mapper>

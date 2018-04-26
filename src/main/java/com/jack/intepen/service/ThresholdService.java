@@ -73,13 +73,7 @@ public class ThresholdService {
     public boolean removeThreshold(int id){
         if(id > 0){
             try{
-                int effectNum = thresholdDao.deleteThreshold(id);
-                if(effectNum > 0 ){
-                    return true;
-                }
-                else{
-                    throw new RuntimeException("删除阈值失败！");
-                }
+                thresholdDao.deleteThreshold(id);
             }
             catch (Exception e){
                 throw new RuntimeException("删除阈值失败：" + e.getMessage());
@@ -88,5 +82,6 @@ public class ThresholdService {
         else{
             throw new RuntimeException("阈值ID不能为空！");
         }
+        return true;
     }
 }
