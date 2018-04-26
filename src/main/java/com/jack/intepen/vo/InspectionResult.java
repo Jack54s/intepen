@@ -6,19 +6,8 @@ import java.sql.Date;
  * Created by 11407 on 23/023.
  */
 public class InspectionResult {
-//id: 110,
-// name: '吴xx',
-// sex: '男',
-// age: 233,
-// idCard: 1111111111,
-// birthday: '2000-01-01',
-// dataTime: this.today,
-// temperature: '36',
-// bloodPressure: '70/110',
-// illness: 1,
-// docName: '小明',
-// record: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-// tel: 13032885319
+
+    private Integer id;
     private Integer elderId;
     private String name;
     private String sex;

@@ -6,18 +6,18 @@
 
     <insert id="insertPatientStatistic" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id" parameterType="com.jack.intepen.entity.PatientStatistic">
-        INSERT INTO intepen_patient_statistic(illness_id, number_of_patient, date)
+        INSERT INTO intepen_view_patient_statistic(illness_id, number_of_patient, date)
         VALUES (#{illnessId}, #{numberOfPatient}, #{date})
     </insert>
 
     <delete id="deletePatientStatistic">
-        DELETE FROM intepen_patient_statistic
+        DELETE FROM intepen_view_patient_statistic
         WHERE
         id = #{id}
     </delete>
 
     <update id="updatePatientStatistic" parameterType="com.jack.intepen.entity.PatientStatistic">
-        UPDATE intepen_patient_statistic
+        UPDATE intepen_view_patient_statistic
         SET illness_id = #{illnessId}, number_of_patient = #{numberOfPatient}, date = #{date}
         WHERE
         id = #{id}
@@ -25,7 +25,7 @@
 
     <select id="queryPatientStatisticByDate" resultType="com.jack.intepen.entity.PatientStatistic">
         SELECT *
-        FROM intepen_patient_statistic
+        FROM intepen_view_patient_statistic
         WHERE
         date = #{date}
     </select>

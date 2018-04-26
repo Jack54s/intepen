@@ -73,7 +73,6 @@ public class ElderService {
         else{
             throw new RuntimeException("老人ID不能为空！");
         }
-
     }
 
     public boolean deleteElder(int id){

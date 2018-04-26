@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface PatientStatisticDao {
 
-    int insertPatientStatistic(PatientStatistic patientStatistic);
-    int deletePatientStatistic(int id);
-    int updatePatientStatistic(PatientStatistic patientStatistic);
+//    int insertPatientStatistic(PatientStatistic patientStatistic);
+//    int deletePatientStatistic(int id);
+//    int updatePatientStatistic(PatientStatistic patientStatistic);
     List<PatientStatistic> queryPatientStatisticByDate(Date date);
     List<PatientStatistic> queryPatientStatisticByDateZone(@Param("dateA") Date dateA, @Param("dateB") Date dateB);
 }

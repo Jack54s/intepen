@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.intepen.dao.InspectionResultDao">
+
+    <select id="queryInspectionResultByElderId" resultType="com.jack.intepen.vo.InspectionResult">
+        SELECT *
+        FROM intepen_view_inspection_result
+        WHERE
+        elder_id = #{elderId}
+    </select>
+
+    <select id="queryInspectionResultByElderName" resultType="com.jack.intepen.vo.InspectionResult">
+        SELECT *
+        FROM intepen_view_inspection_result
+        WHERE
+        elder_name = #{elderName}
+    </select>
+
+    <select id="queryInspectionResultByDate" resultType="com.jack.intepen.vo.InspectionResult">
+        SELECT *
+        FROM intepen_view_inspection_result
+        WHERE
+        date = #{date}
+    </select>
+
+    <select id="queryInspectionResultByElderNameAndDateZone" resultType="com.jack.intepen.vo.InspectionResult">
+        SELECT *
+        FROM intepen_view_inspection_result
+        WHERE
+        elder_name = #{elderName} AND date >= #{dateA} AND date &lt;= #{dateB}
+    </select>
+
+    <select id="queryInspectionResultByDateZone" resultType="com.jack.intepen.vo.InspectionResult">
+        SELECT *
+        FROM intepen_view_inspection_result
+        WHERE
+        date >= #{dateA} AND date &lt;= #{dateB}
+    </select>
+</mapper>

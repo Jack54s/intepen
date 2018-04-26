@@ -185,7 +185,7 @@ public class ElderController {
     private IntepenResult<Boolean> editElder(@ApiParam(value = "一个老人对象", required = true)
                                                  @RequestBody Elder elder){
 
-        logger.info("------------------Post:/elder/add------------------");
+        logger.info("------------------Post:/elder/edit------------------");
 
         Subject currentUser = SecurityUtils.getSubject();
 

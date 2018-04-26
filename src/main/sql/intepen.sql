@@ -203,3 +203,18 @@ CREATE TABLE intepen_elder_family(
   `family_id` INT NOT NULL COMMENT '家属ID',
   CONSTRAINT ElderFamily_PK PRIMARY KEY(elder_id, family_id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '老人家属关联表';
+
+#VIEW
+
+CREATE VIEW intepen_view_inspection_result AS
+SELECT I.id AS id, E.id AS elder_id, E.name AS name, E.sex AS sex, E.id_card AS id_card, E.birthday AS birthday, I.date AS date, I.temperature AS temperature,
+I.blood_pressure AS blood_pressure, I.illness_id AS illness_id, N.name AS nurse_name,
+I.record AS record, E.tel AS tel
+FROM intepen_elder AS E, intepen_inspection AS I, intepen_illness AS L, intepen_sys_user AS N
+WHERE I.elder_id = E.id AND I.illness_id = L.id AND E.nurse_id = N.id;
+
+CREATE VIEW intepen_view_patient_statistics AS
+SELECT I.illness_id AS illness_id, COUNT(I.elder_id) AS number_of_patient, I.date AS date
+FROM intepen_inspection AS I
+GROUP BY date, illness_id
+ORDER BY date;

@@ -25,9 +25,9 @@ public class PatientStatisticService {
 
     public List<PatientStatistic> getPatientStatisticsToday(){
 
-        logger.info("-----------Date:{}------------", new java.util.Date());
-
-        return getPatientStatisticsByDate((Date)new java.util.Date());
+        java.util.Date day = new java.util.Date();
+        Date today = new Date(day.getTime());
+        return getPatientStatisticsByDate(today);
     }
 
     public List<PatientStatistic> getPatientStatisticsByDateZone(Date dateA, Date dateB){

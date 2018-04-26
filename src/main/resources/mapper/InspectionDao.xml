@@ -37,4 +37,11 @@
         WHERE
         date = #{date}
     </select>
+
+    <select id="queryInspectionByElderIdAndDate" resultType="com.jack.intepen.entity.Inspection">
+        SELECT *
+        FROM intepen_inspection
+        WHERE
+        elder_id = #{elderId} AND date = #{date}
+    </select>
 </mapper>
