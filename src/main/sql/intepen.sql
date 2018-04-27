@@ -18,8 +18,8 @@ CREATE TABLE intepen_elder(
   `tel` VARCHAR (15) COMMENT '手机',
   `avatar` VARCHAR (100) COMMENT '头像地址',
   `nurse_id` INT COMMENT '分配的护工ID',
-  PRIMARY KEY (id),
-  CONSTRAINT NurseID_FK FOREIGN KEY(nurse_id) REFERENCES intepen_sys_user(id)
+  PRIMARY KEY (id)
+  --CONSTRAINT NurseID_FK FOREIGN KEY(nurse_id) REFERENCES intepen_sys_user(id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '老人表';
 
 DROP TABLE IF EXISTS intepen_medical_record;
@@ -33,8 +33,8 @@ CREATE TABLE intepen_medical_record(
   `history_of_personal_illness` TEXT COMMENT '个人史',
   `history_of_family_illness` TEXT COMMENT '家族史',
   `elder_id` INT NOT NULL COMMENT'老人编号',
-  PRIMARY KEY (id),
-  CONSTRAINT ElderID_FK FOREIGN KEY(elder_id) REFERENCES intepen_elder(id)
+  PRIMARY KEY (id)
+  --CONSTRAINT ElderID_FK FOREIGN KEY(elder_id) REFERENCES intepen_elder(id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '病历表';
 
 DROP TABLE IF EXISTS intepen_doctor_advice;
@@ -47,8 +47,8 @@ CREATE TABLE intepen_doctor_advice(
   `time` VARCHAR (100) COMMENT '时间',
   `dosage` VARCHAR (100) COMMENT '用量',
   `note` TEXT COMMENT '备注',
-  PRIMARY KEY (id),
-  CONSTRAINT ElderID_FK FOREIGN KEY(elder_id) REFERENCES intepen_elder(id)
+  PRIMARY KEY (id)
+  --CONSTRAINT ElderID_FK FOREIGN KEY(elder_id) REFERENCES intepen_elder(id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '医嘱表';
 
 DROP TABLE IF EXISTS intepen_physical_examination_data;
@@ -57,8 +57,8 @@ CREATE TABLE intepen_physical_examination_data(
   `elder_id` INT NOT NULL COMMENT '老人编号',
   `height` FLOAT(5,2) COMMENT '身高',
   `weight` FLOAT(5,2) COMMENT '体重',
-  PRIMARY KEY (id),
-  CONSTRAINT ElderID_FK FOREIGN KEY(elder_id) REFERENCES intepen_elder(id)
+  PRIMARY KEY (id)
+  --CONSTRAINT ElderID_FK FOREIGN KEY(elder_id) REFERENCES intepen_elder(id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '体检数据表';
 
 DROP TABLE IF EXISTS intepen_events;
@@ -98,15 +98,15 @@ CREATE TABLE intepen_illness(
   PRIMARY KEY (id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '病名表';
 
-DROP TABLE IF EXISTS intepen_patient_statistic;
-CREATE TABLE intepen_patient_statistic(
-  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `illness_id` INT NOT NULL COMMENT '病名ID',
-  `number_of_patient` INT NOT NULL COMMENT '生病人数',
-  `date` DATE COMMENT '日期',
-  PRIMARY KEY (id),
-  CONSTRAINT IllnessID_FK FOREIGN KEY(illness_id) REFERENCES intepen_illness(id)
-)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '病名表';
+-- DROP TABLE IF EXISTS intepen_patient_statistic;
+-- CREATE TABLE intepen_patient_statistic(
+--   `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+--   `illness_id` INT NOT NULL COMMENT '病名ID',
+--   `number_of_patient` INT NOT NULL COMMENT '生病人数',
+--   `date` DATE COMMENT '日期',
+--   PRIMARY KEY (id),
+--   CONSTRAINT IllnessID_FK FOREIGN KEY(illness_id) REFERENCES intepen_illness(id)
+-- )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '病名表';
 
 DROP TABLE IF EXISTS intepen_inspection;
 CREATE TABLE intepen_inspection(
@@ -119,6 +119,19 @@ CREATE TABLE intepen_inspection(
   `date` DATE COMMENT '日期',
   PRIMARY KEY (id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '巡查表';
+
+DROP TABLE IF EXISTS intepen_physiological_data;
+CREATE TABLE intepen_physiological_data(
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `item` VARCHAR (100) COMMENT '数据项',
+  `value` VARCHAR (100) COMMENT '数据值',
+  `datetime` TIMESTAMP COMMENT '时间',
+  `device_id` VARCHAR(200) NOT NULL COMMENT '设备标识',
+  PRIMARY KEY (id)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '生理实时信息表';
+
+DROP TABLE IF EXISTS intepen_device;
+--TODO Create table
 
 -- DROP TABLE IF EXISTS intepen_family;
 -- CREATE TABLE intepen_family(
@@ -204,6 +217,8 @@ CREATE TABLE intepen_elder_family(
   CONSTRAINT ElderFamily_PK PRIMARY KEY(elder_id, family_id)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT '老人家属关联表';
 
+#RELATION_END
+
 #VIEW
 
 CREATE VIEW intepen_view_inspection_result AS
@@ -218,3 +233,5 @@ SELECT I.illness_id AS illness_id, COUNT(I.elder_id) AS number_of_patient, I.dat
 FROM intepen_inspection AS I
 GROUP BY date, illness_id
 ORDER BY date;
+
+#VIEW_END

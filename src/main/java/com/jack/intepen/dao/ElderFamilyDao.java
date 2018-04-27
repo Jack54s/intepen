@@ -16,4 +16,6 @@ public interface ElderFamilyDao {
     int insertElderFamilyRelation(@Param("elderId") int elderId, @Param("familyId") int familyId);
     int deleteElderFamilyByFamilyId(int familyId);
     int deleteElderFamilyByElderId(int elderId);
+    int deleteElderFamily(@Param("elderId") Integer elderId,
+                          @Param("familyId") Integer familyId);
 }

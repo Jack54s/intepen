@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by 11407 on 30/030.
@@ -241,4 +242,22 @@ public class ElderController {
 
         return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), medicalRecords);
     }
+
+    /*@RequestMapping(value = "/relatefamily", method = RequestMethod.POST)
+    @ApiOperation(value = "/elder/relatefamily", notes = "关联老人的家属")
+    public IntepenResult<Boolean> relateFamilyByElderId(@ApiParam(value = "一个存储老人ID和家属IDList的Map", required = true)
+                                                            @RequestBody Map<Integer, List> relation){
+
+        logger.info("----------------POST:/elder/relatefamily-------------");
+
+        Set<Integer> elderIdSet = relation.keySet();
+
+        if(elderIdSet.size() == 1){
+            Integer elderId = elderIdSet.
+        }
+
+        if(elderService.getElderById() == null ){
+
+        }
+    }*/
 }

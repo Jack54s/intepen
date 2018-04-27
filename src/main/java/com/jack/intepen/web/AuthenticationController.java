@@ -114,6 +114,32 @@ public class AuthenticationController {
             return new IntepenResult<>(AuthcEnum.ACCOUNT_UNLOGIN.getCode(), AuthcEnum.ACCOUNT_UNLOGIN.getError());
         }
     }
+
+    @RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
+    @ApiOperation(value = "/resetpassword", notes = "更改密码")
+    public IntepenResult<Boolean> verifyPassword(@ApiParam(value = "一个包含新旧密码的Map", required = true)
+                                                     @RequestBody Map<String, String> password,
+                                                 HttpServletRequest request){
+
+        if(request.getSession().getAttribute("id") == null){
+            return new IntepenResult<>(AuthcEnum.ACCOUNT_UNLOGIN.getCode(), AuthcEnum.ACCOUNT_UNLOGIN.getError());
+        }
+
+        Integer userId = (Integer) request.getSession().getAttribute("id");
+
+        if(userService.verifyPassword(userId, password.get("oldPassword"))){
+            if(userService.resetPassword(userId, password.get("newPassword"))){
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), AuthcEnum.SUCCESS.getError());
+            }
+            else{
+                return new IntepenResult<>(AuthcEnum.RESET_PASSWORD_ERROR.getCode(), AuthcEnum.RESET_PASSWORD_ERROR.getError());
+            }
+        }
+        else{
+            return new IntepenResult<>(AuthcEnum.INCORRECT_PASSWORD.getCode(), AuthcEnum.INCORRECT_PASSWORD.getError());
+        }
+    }
+
     @ResponseBody
     @RequestMapping(value = "/returnlogin")
     @ApiIgnore

@@ -18,6 +18,7 @@ public enum AuthcEnum {
     EDIT_ERROR(110, "编辑信息错误！"),
     ADD_ERROR(111, "增加信息错误！"),
     REMOVE_ERROR(112, "删除信息错误！"),
+    RESET_PASSWORD_ERROR(113, "更改密码错误！"),
     ;
 
     private int code;

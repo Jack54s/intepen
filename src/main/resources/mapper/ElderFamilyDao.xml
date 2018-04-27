@@ -31,4 +31,9 @@
         DELETE FROM intepen_elder_family
         WHERE elder_id = #{elderId}
     </delete>
+
+    <delete id="deleteElderFamily">
+        DELETE FROM intepen_elder_family
+        WHERE elder_id = #{elderId} AND family_id = #{familyId}
+    </delete>
 </mapper>

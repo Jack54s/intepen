@@ -4,6 +4,7 @@ import com.jack.intepen.dao.RBAC.*;
 import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.entity.RBAC.SysUser;
 import com.jack.intepen.service.UserInterface.SysUserService;
+import com.jack.intepen.util.EncryptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ import java.util.Set;
  */
 @Repository
 public class UserService implements SysUserService {
+
+    @Autowired
+    private SysUserDao sysUserDao;
 
     @Autowired
     private SysUserRoleDao sysUserRoleDao;
@@ -85,6 +89,41 @@ public class UserService implements SysUserService {
         }
         else{
             throw new RuntimeException("用户ID不能为空！");
+        }
+    }
+
+    public Boolean verifyPassword(Integer userId, String password){
+
+        SysUser user = sysUserDao.querySysUserById(userId);
+
+        if(user != null){
+            if(user.getPassword().equals(EncryptionUtils.SHA512Encode(password, user.getSalt()))){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            throw new RuntimeException("不存在的用户！");
+        }
+    }
+
+    public Boolean resetPassword(Integer userId, String password){
+
+        SysUser user = sysUserDao.querySysUserById(userId);
+
+        if(user != null){
+            user.setPassword(EncryptionUtils.SHA512Encode(password, user.getSalt()));
+            if(sysUserDao.updateSysUser(user) > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            throw new RuntimeException("不存在的用户！");
         }
     }
 }

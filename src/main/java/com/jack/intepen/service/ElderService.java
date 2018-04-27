@@ -1,6 +1,7 @@
 package com.jack.intepen.service;
 
 import com.jack.intepen.dao.ElderDao;
+import com.jack.intepen.dao.ElderFamilyDao;
 import com.jack.intepen.dao.MedicalRecordDao;
 import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.MedicalRecord;
@@ -21,6 +22,9 @@ public class ElderService {
 
     @Autowired
     private MedicalRecordDao medicalRecordDao;
+
+    @Autowired
+    private ElderFamilyDao elderFamilyDao;
 
     public List<Elder> getElderList(){
         return elderDao.queryElder();
@@ -114,5 +118,18 @@ public class ElderService {
 
     public List<MedicalRecord> getMedicalRecords(int elderId){
         return medicalRecordDao.queryMedicalRecordByElderId(elderId);
+    }
+
+    @Transactional
+    public Boolean relateFamily(Integer elderId, List<Integer> familyIds){
+
+        elderFamilyDao.deleteElderFamilyByElderId(elderId);
+
+        for (Integer familyId : familyIds){
+            if(elderFamilyDao.insertElderFamilyRelation(elderId, familyId) != 1){
+                return false;
+            }
+        }
+        return true;
     }
 }
