@@ -234,4 +234,18 @@ FROM intepen_inspection AS I
 GROUP BY date, illness_id
 ORDER BY date;
 
+CREATE VIEW intepen_view_elder_profile AS
+SELECT E.id AS id, E.name AS name, E.sex AS sex, E.id_card AS id_card, E.birthday AS birthday, E.in_hospital AS in_hospital, E.bed AS bed, U.name AS nurse_name, E.tel AS tel, E.avatar AS avatar
+FROM intepen_elder AS E, intepen_sys_user AS U
+WHERE E.nurse_id = U.id
+UNION
+SELECT E.id AS id, E.name AS name, E.sex AS sex, E.id_card AS id_card, E.birthday AS birthday, E.in_hospital AS in_hospital, E.bed AS bed, U.name AS nurse_name, E.tel AS tel, E.avatar AS avatar
+FROM intepen_elder AS E, intepen_sys_user AS U
+WHERE E.nurse_id IS NULL
+UNION
+SELECT E.id AS id, E.name AS name, E.sex AS sex, E.id_card AS id_card, E.birthday AS birthday, E.in_hospital AS in_hospital, E.bed AS bed, U.name AS nurse_name, E.tel AS tel, E.avatar AS avatar
+FROM intepen_elder AS E, intepen_sys_user AS U
+WHERE (SELECT id FROM intepen_sys_user WHERE id = nurse_id) IS NULL
+ORDER BY id;
+
 #VIEW_END

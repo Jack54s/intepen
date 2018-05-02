@@ -5,17 +5,17 @@
 <mapper namespace="com.jack.intepen.dao.ElderDao">
     <select id="queryElder" resultType="com.jack.intepen.entity.Elder">
         SELECT *
-        FROM intepen_elder
+        FROM intepen_view_elder_profile
     </select>
     <select id="queryElderById" resultType="com.jack.intepen.entity.Elder">
         SELECT *
-        FROM intepen_elder
+        FROM intepen_view_elder_profile
         WHERE 
         id = #{id}
     </select>
     <select id="queryUndistributedElder" resultType="com.jack.intepen.entity.Elder">
         SELECT *
-        FROM intepen_elder
+        FROM intepen_view_elder_profile
         WHERE
         nurse_id IS NULL
     </select>
@@ -41,13 +41,13 @@
     </delete>
     <select id="queryElderByName" resultType="com.jack.intepen.entity.Elder">
         SELECT *
-        FROM intepen_elder
+        FROM intepen_view_elder_profile
         WHERE
         name = #{name}
     </select>
     <select id="queryElderByIdCard" resultType="com.jack.intepen.entity.Elder">
         SELECT *
-        FROM intepen_elder
+        FROM intepen_view_elder_profile
         WHERE
         id_card = #{idCard}
     </select>

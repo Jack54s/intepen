@@ -4,35 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jack.intepen.dao.PatientStatisticDao">
 
-    <insert id="insertPatientStatistic" useGeneratedKeys="true" keyProperty="id"
-            keyColumn="id" parameterType="com.jack.intepen.entity.PatientStatistic">
-        INSERT INTO intepen_view_patient_statistic(illness_id, number_of_patient, date)
-        VALUES (#{illnessId}, #{numberOfPatient}, #{date})
-    </insert>
-
-    <delete id="deletePatientStatistic">
-        DELETE FROM intepen_view_patient_statistic
-        WHERE
-        id = #{id}
-    </delete>
-
-    <update id="updatePatientStatistic" parameterType="com.jack.intepen.entity.PatientStatistic">
-        UPDATE intepen_view_patient_statistic
-        SET illness_id = #{illnessId}, number_of_patient = #{numberOfPatient}, date = #{date}
-        WHERE
-        id = #{id}
-    </update>
-
     <select id="queryPatientStatisticByDate" resultType="com.jack.intepen.entity.PatientStatistic">
         SELECT *
-        FROM intepen_view_patient_statistic
+        FROM intepen_view_patient_statistics
         WHERE
         date = #{date}
     </select>
 
     <select id="queryPatientStatisticByDateZone" resultType="com.jack.intepen.entity.PatientStatistic">
         SELECT *
-        FROM intepen_patient_statistic
+        FROM intepen_view_patient_statistics
         WHERE
         date >= #{dateA} AND date &lt;= #{dateB}
     </select>

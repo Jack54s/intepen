@@ -30,6 +30,7 @@
 		<springloaded.version>1.2.8.RELEASE</springloaded.version>
 		<springfox-swagger2.version>2.7.0</springfox-swagger2.version>
 		<springfox-swagger-ui.version>2.7.0</springfox-swagger-ui.version>
+		<kaptcha.version>2.3.2</kaptcha.version>
 
 	</properties>
 
@@ -117,11 +118,16 @@
 			<version>${springfox-swagger-ui.version}</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.penggle</groupId>
+			<artifactId>kaptcha</artifactId>
+			<version>${kaptcha.version}</version>
 		</dependency>
 	</dependencies>
 
