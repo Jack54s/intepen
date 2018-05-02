@@ -6,6 +6,7 @@ import com.jack.intepen.entity.MedicalRecord;
 import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.ElderEnum;
 import com.jack.intepen.service.ElderService;
+import com.jack.intepen.vo.ElderProfile;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -40,7 +41,7 @@ public class ElderController {
 
         logger.info("------------------GET:/elder/list-----------------");
 
-        List<Elder> list = elderService.getElderList();
+        List<ElderProfile> list = elderService.getElderList();
         if(list != null){
             return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -51,7 +52,7 @@ public class ElderController {
 
     @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "/elder/profile", notes = "查询某个老人信息")
-    private IntepenResult<Elder> queryElderById(@ApiParam(value = "老人的ID", required = true)
+    private IntepenResult<ElderProfile> queryElderById(@ApiParam(value = "老人的ID", required = true)
                                                     @PathVariable(value = "id") Integer id ){
 
         logger.info("------------------GET:/elder/profile-----------------");
@@ -60,7 +61,7 @@ public class ElderController {
             return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
         }
         else{
-            Elder elder = elderService.getElderById(id);
+            ElderProfile elder = elderService.getElderById(id);
             if(elder != null){
                 return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elder);
             }
@@ -84,9 +85,9 @@ public class ElderController {
             return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
         }
         else if(name != null && !("".equals(name) ) && idCard != null && !("".equals(idCard))){
-            List<Elder> elders = new ArrayList<>();
+            List<ElderProfile> elders = new ArrayList<>();
 
-            Elder elder = elderService.getElderByIdCard(idCard);
+            ElderProfile elder = elderService.getElderByIdCard(idCard);
             if(elder == null){
                 return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), new ArrayList());
             }
@@ -99,7 +100,7 @@ public class ElderController {
             }
         }
         else if(name != null && !("".equals(name)) && (idCard == null || "".equals(idCard))){
-            List<Elder> elders = elderService.getElderByName(name);
+            List<ElderProfile> elders = elderService.getElderByName(name);
             if(elders != null){
                 return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
             }
@@ -108,9 +109,9 @@ public class ElderController {
             }
         }
         else if((name == null || "".equals(name)) && idCard != null && !("".equals(idCard))){
-            List<Elder> elders = new ArrayList<>();
+            List<ElderProfile> elders = new ArrayList<>();
 
-            Elder elder = elderService.getElderByIdCard(idCard);
+            ElderProfile elder = elderService.getElderByIdCard(idCard);
             if(elder == null){
                 return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
             }
@@ -131,7 +132,7 @@ public class ElderController {
 
         logger.info("------------------GET:/elder/undistributed-----------------");
 
-        List<Elder> elders = elderService.getUndistributedElder();
+        List<ElderProfile> elders = elderService.getUndistributedElder();
 
         if(elders != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);

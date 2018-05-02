@@ -6,6 +6,7 @@ import com.jack.intepen.entity.Family;
 import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.FamilyEnum;
 import com.jack.intepen.service.FamilyService;
+import com.jack.intepen.vo.ElderProfile;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -91,7 +92,7 @@ public class FamilyController {
 
         Integer familyId = (Integer) request.getSession().getAttribute("id");
 
-        List<Elder> elders = familyService.getEldersByFamilyId(familyId);
+        List<ElderProfile> elders = familyService.getEldersByFamilyId(familyId);
         if(elders == null){
             return new IntepenResult<>(AuthcEnum.ERROR.getCode(), AuthcEnum.ERROR.getError());
         }

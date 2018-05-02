@@ -12,6 +12,7 @@ import com.jack.intepen.entity.Family;
 import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.service.UserInterface.SysUserService;
 import com.jack.intepen.util.EncryptionUtils;
+import com.jack.intepen.vo.ElderProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,11 +128,11 @@ public class FamilyService implements SysUserService {
         return true;
     }
 
-    public List<Elder> getEldersByFamilyId(int id){
+    public List<ElderProfile> getEldersByFamilyId(int id){
 
         logger.info("-------------------getElderByFamilyId-----------------");
 
-        List<Elder> elders = new LinkedList();
+        List<ElderProfile> elders = new LinkedList();
         if(id > 0 ){
             try{
                 List<Integer> elderIds = elderFamilyDao.queryElderIdByFamilyId(id);

@@ -5,6 +5,7 @@ import com.jack.intepen.dao.ElderFamilyDao;
 import com.jack.intepen.dao.MedicalRecordDao;
 import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.MedicalRecord;
+import com.jack.intepen.vo.ElderProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,17 +27,17 @@ public class ElderService {
     @Autowired
     private ElderFamilyDao elderFamilyDao;
 
-    public List<Elder> getElderList(){
+    public List<ElderProfile> getElderList(){
         return elderDao.queryElder();
     }
 
-    public Elder getElderById(int id){
+    public ElderProfile getElderById(int id){
         return elderDao.queryElderById(id);
     }
 
-    public List<Elder> getElderByName(String name) { return elderDao.queryElderByName(name); }
+    public List<ElderProfile> getElderByName(String name) { return elderDao.queryElderByName(name); }
 
-    public Elder getElderByIdCard(String idCard) { return elderDao.queryElderByIdCard(idCard); }
+    public ElderProfile getElderByIdCard(String idCard) { return elderDao.queryElderByIdCard(idCard); }
 
     @Transactional
     public boolean addElder(Elder elder){
@@ -94,7 +95,7 @@ public class ElderService {
         return true;
     }
 
-    public List<Elder> getUndistributedElder(){ return elderDao.queryUndistributedElder(); }
+    public List<ElderProfile> getUndistributedElder(){ return elderDao.queryUndistributedElder(); }
 
     public boolean distributeNurse(int id, int nurseId){
         if(id > 0 && nurseId > 0){
