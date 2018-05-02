@@ -19,6 +19,7 @@ public enum AuthcEnum {
     ADD_ERROR(111, "增加信息错误！"),
     REMOVE_ERROR(112, "删除信息错误！"),
     RESET_PASSWORD_ERROR(113, "更改密码错误！"),
+    CAPTCHA_ERROR(114, "验证码错误！"),
     ;
 
     private int code;
