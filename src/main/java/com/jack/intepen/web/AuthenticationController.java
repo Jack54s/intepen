@@ -93,9 +93,9 @@ public class AuthenticationController {
 
         Map<String, Object> userToken = new HashMap<>();
 
-        userToken.put("id", user.getId());
+        userToken.put("token", user.getId());
         userToken.put("username", user.getAccount());
-        userToken.put("role", userService.getRoles(user.getId()));
+        userToken.put("roles", userService.getRoles(user.getId()));
 
         return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), userToken);
     }

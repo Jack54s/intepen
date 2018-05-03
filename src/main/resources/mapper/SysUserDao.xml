@@ -21,14 +21,14 @@
     </delete>
 
     <select id="querySysUserById" resultType="com.jack.intepen.entity.RBAC.SysUser">
-        SELECT id, account, password, salt, flag
+        SELECT *
         FROM intepen_sys_user
         WHERE
         id = #{id}
     </select>
 
     <select id="querySysUserByAccount" resultType="com.jack.intepen.entity.RBAC.SysUser">
-        SELECT id, account, password, salt, flag
+        SELECT *
         FROM intepen_sys_user
         WHERE
         account = #{account}

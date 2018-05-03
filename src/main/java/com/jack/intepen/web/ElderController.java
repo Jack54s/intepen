@@ -166,11 +166,11 @@ public class ElderController {
 
         logger.info("------------------Post:/elder/add------------------");
 
-        Subject currentUser = SecurityUtils.getSubject();
-
-        if(!currentUser.isPermitted("elder:add")){
-            return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
-        }
+//        Subject currentUser = SecurityUtils.getSubject();
+//
+//        if(!currentUser.isPermitted("elder:add")){
+//            return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
+//        }
 
         boolean success = elderService.addElder(elder);
 
@@ -189,11 +189,11 @@ public class ElderController {
 
         logger.info("------------------Post:/elder/edit------------------");
 
-        Subject currentUser = SecurityUtils.getSubject();
-
-        if(!currentUser.isPermitted("elder:edit")){
-            return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
-        }
+//        Subject currentUser = SecurityUtils.getSubject();
+//
+//        if(!currentUser.isPermitted("elder:edit")){
+//            return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
+//        }
 
         boolean success = elderService.modifyElder(elder);
 
@@ -207,16 +207,16 @@ public class ElderController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ApiOperation(value = "/elder/delete", notes = "删除一个老人")
-    private IntepenResult<Boolean> deleteElder(@ApiParam(value = "老人id", required = true)
+    private IntepenResult<Boolean> deleteElder(@ApiParam(value = "老人id的Map", required = true)
                                                    @RequestBody Map<String, Integer> id){
 
         logger.info("------------------Post:/elder/delete------------------");
 
-        Subject currentUser = SecurityUtils.getSubject();
-
-        if(!currentUser.isPermitted("elder:delete")){
-            return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
-        }
+//        Subject currentUser = SecurityUtils.getSubject();
+//
+//        if(!currentUser.isPermitted("elder:delete")){
+//            return new IntepenResult<>(AuthcEnum.UNAUTHORIZING.getCode(), AuthcEnum.UNAUTHORIZING.getError());
+//        }
 
         boolean success = elderService.deleteElder(id.get("id"));
 

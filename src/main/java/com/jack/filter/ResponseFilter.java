@@ -29,7 +29,7 @@ public class ResponseFilter implements Filter {
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "*");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "*");
         httpServletResponse.setHeader("Access-Control-Expose-Headers", "*");
 
 //        if (httpServletRequest.getMethod().equals("OPTIONS")) {

@@ -7,6 +7,7 @@ public class Family {
 
     private Integer id;
     private String account;
+    private String name;
     private String password;
     private String salt;
 
@@ -24,6 +25,14 @@ public class Family {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

@@ -33,6 +33,8 @@ public class UserService implements SysUserService {
     @Autowired
     private SysPermissionsDao sysPermissionsDao;
 
+    public SysUser getUserById(Integer id){ return sysUserDao.querySysUserById(id);}
+
     public Set<String> getRoles(Integer userId){
 
         Set<Integer> roleIds = sysUserRoleDao.queryRoleByUserId(userId);

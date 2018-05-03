@@ -6,6 +6,7 @@ package com.jack.intepen.entity.RBAC;
 public class SysUser {
 
     private Integer id;
+    private String name;
     private String account;
     private String password;
     private String salt;
@@ -17,6 +18,14 @@ public class SysUser {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAccount() {
