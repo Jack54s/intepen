@@ -10,6 +10,7 @@ import com.jack.intepen.entity.Nurse;
 import com.jack.intepen.entity.RBAC.SysRoles;
 import com.jack.intepen.service.UserInterface.SysUserService;
 import com.jack.intepen.util.EncryptionUtils;
+import com.jack.intepen.vo.ElderProfile;
 import com.jack.intepen.vo.NurseProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +45,8 @@ public class NurseService implements SysUserService {
     @Autowired
     private SysPermissionsDao sysPermissionsDao;
 
-    public List<Nurse> getNurseList(){
-        return nurseDao.queryNurse();
+    public List<NurseProfile> getNurseProfileList(){
+        return nurseDao.queryNurseProfile();
     }
 
     public Nurse getNurseByAccount(String account){
@@ -133,8 +134,8 @@ public class NurseService implements SysUserService {
         return true;
     }
 
-    public List<Elder> getElderByNurse(int nurseId){
-        return nurseDao.queryElderByNurse(nurseId);
+    public List<ElderProfile> getElderByNurse(int nurseId){
+        return nurseDao.queryElderProfileByNurse(nurseId);
     }
 
     public Set<String> getRoles(String account){

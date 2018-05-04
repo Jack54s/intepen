@@ -47,6 +47,10 @@ public class RolesController {
         logger.info("------------------GET:/roles/list-----------------");
 
         List<SysRoles> list = sysRolesService.getAllRoles();
+
+        if(list.size() == 0){
+            list.add(new SysRoles());
+        }
         if(list != null){
             return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -63,7 +67,9 @@ public class RolesController {
 
         Set<String> roles = userService.getRoles((Integer)request.getSession().getAttribute("id"));
 
-
+        if(roles.size() == 0){
+            roles.add(new String());
+        }
         if(roles != null){
             return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), roles);
         }
@@ -83,6 +89,9 @@ public class RolesController {
         List<SysRoles> list = sysRolesService.getAllRoles();
 
         list.removeIf(sysRoles -> roles.contains(sysRoles.getRole()));
+        if(list.size() == 0){
+            list.add(new SysRoles());
+        }
         if(list != null){
             return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }

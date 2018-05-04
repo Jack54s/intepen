@@ -39,6 +39,9 @@ public class PatientStatisticsController {
 
         List<PatientStatistic> statistics = patientStatisticService.getPatientStatisticsToday();
 
+        if(statistics.size() == 0){
+            statistics.add(new PatientStatistic());
+        }
         if(statistics != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), statistics);
         }
@@ -62,6 +65,9 @@ public class PatientStatisticsController {
         }
         List<PatientStatistic> statistics = patientStatisticService.getPatientStatisticsByDateZone(dateA, dateB);
 
+        if(statistics.size() == 0){
+            statistics.add(new PatientStatistic());
+        }
         if(statistics != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), statistics);
         }

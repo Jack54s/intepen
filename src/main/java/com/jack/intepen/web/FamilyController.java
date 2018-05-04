@@ -41,6 +41,10 @@ public class FamilyController {
         logger.info("------------------GET:/family/list-----------------");
 
         List<Family> list = familyService.getFamilyList();
+
+        if(list.size() == 0){
+            list.add(new Family());
+        }
         if(list != null && list.size() != 0){
             return  new IntepenResult<List>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -93,6 +97,7 @@ public class FamilyController {
         Integer familyId = (Integer) request.getSession().getAttribute("id");
 
         List<ElderProfile> elders = familyService.getEldersByFamilyId(familyId);
+
         if(elders == null){
             return new IntepenResult<>(AuthcEnum.ERROR.getCode(), AuthcEnum.ERROR.getError());
         }

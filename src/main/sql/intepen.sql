@@ -226,7 +226,11 @@ SELECT I.id AS id, E.id AS elder_id, E.name AS name, E.sex AS sex, E.id_card AS 
 I.blood_pressure AS blood_pressure, I.illness_id AS illness_id, N.name AS nurse_name,
 I.record AS record, E.tel AS tel
 FROM intepen_elder AS E, intepen_inspection AS I, intepen_illness AS L, intepen_sys_user AS N
-WHERE I.elder_id = E.id AND I.illness_id = L.id AND E.nurse_id = N.id;
+WHERE I.elder_id = E.id AND
+(I.illness_id = L.id OR I.illness_id IS NULL OR (SELECT id FROM intepen_illness WHERE id = I.illness_id) IS NULL) AND
+(E.nurse_id = N.id OR E.nurse_id IS NULL OR (SELECT id FROM intepen_sys_user WHERE id = E.nurse_id) IS NULL)
+GROUP BY id
+ORDER BY id;
 
 CREATE VIEW intepen_view_patient_statistics AS
 SELECT I.illness_id AS illness_id, COUNT(I.elder_id) AS number_of_patient, I.date AS date

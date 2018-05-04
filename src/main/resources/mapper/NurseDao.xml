@@ -59,9 +59,20 @@
         FROM intepen_sys_user
         WHERE flag = 1
     </select>
+    <select id="queryNurseProfile" resultType="com.jack.intepen.vo.NurseProfile">
+        SELECT id, name, sex, age, rate, time, avatar, introduction, evaluation
+        FROM intepen_sys_user
+        WHERE flag = 1
+    </select>
     <select id="queryElderByNurse" resultType="com.jack.intepen.entity.Elder">
         SELECT *
         FROM intepen_elder
+        WHERE
+        nurse_id = #{nurseId}
+    </select>
+    <select id="queryElderProfileByNurse" resultType="com.jack.intepen.vo.ElderProfile">
+        SELECT *
+        FROM intepen_view_elder_profile
         WHERE
         nurse_id = #{nurseId}
     </select>

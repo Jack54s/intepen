@@ -6,6 +6,7 @@ import com.jack.intepen.entity.Nurse;
 import com.jack.intepen.enums.AuthcEnum;
 import com.jack.intepen.enums.NurseEnum;
 import com.jack.intepen.service.NurseService;
+import com.jack.intepen.vo.ElderProfile;
 import com.jack.intepen.vo.NurseProfile;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,11 @@ public class NurseController {
 
         logger.info("------------------GET:/nurse/list-----------------");
 
-        List<Nurse> list = nurseService.getNurseList();
+        List<NurseProfile> list = nurseService.getNurseProfileList();
+
+        if(list.size() == 0){
+            list.add(new NurseProfile());
+        }
         if(list != null && list.size() != 0){
             return  new IntepenResult<List>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -77,12 +82,15 @@ public class NurseController {
             return new IntepenResult<>(AuthcEnum.PARAM_ERROR.getCode(), AuthcEnum.PARAM_ERROR.getError());
         }
         else if(name != null && !("".equals(name) ) && id != null && !("".equals(id))){
-            List<NurseProfile> nurseProfiles = new LinkedList<>();
+            List<NurseProfile> nurseProfiles = new ArrayList<>();
 
             NurseProfile nurseProfile = nurseService.getNurseProfileById(id);
 
             if(nurseProfile.getName().equals(name)){
                 nurseProfiles.add(nurseProfile);
+                if(nurseProfiles.size() == 0){
+                    nurseProfiles.add(new NurseProfile());
+                }
                 return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurseProfiles);
             }
             else{
@@ -91,6 +99,10 @@ public class NurseController {
         }
         else if(name != null && !("".equals(name)) && id == null){
             List<NurseProfile> nurseProfiles = nurseService.getNurseProfileByName(name);
+
+            if(nurseProfiles.size() == 0){
+                nurseProfiles.add(new NurseProfile());
+            }
             if(nurseProfiles != null){
                 return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurseProfiles);
             }
@@ -99,10 +111,15 @@ public class NurseController {
             }
         }
         else if((name == null || "".equals(name)) && id != null){
-            List<NurseProfile> nurseProfiles = new LinkedList<>();
+            List<NurseProfile> nurseProfiles = new ArrayList<>();
 
-            nurseProfiles.add(nurseService.getNurseProfileById(id));
+            if(nurseService.getNurseProfileById(id) != null){
+                nurseProfiles.add(nurseService.getNurseProfileById(id));
+            }
 
+            if(nurseProfiles.size() == 0){
+                nurseProfiles.add(new NurseProfile());
+            }
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), nurseProfiles);
         }
         else{
@@ -118,8 +135,11 @@ public class NurseController {
 
         Integer nurseId = (Integer)request.getSession().getAttribute("id");
 
-        List<Elder> elders = nurseService.getElderByNurse(nurseId);
+        List<ElderProfile> elders = nurseService.getElderByNurse(nurseId);
 
+        if(elders.size() == 0){
+            elders.add(new ElderProfile());
+        }
         if(elders != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
         }

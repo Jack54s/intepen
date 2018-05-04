@@ -36,6 +36,9 @@ public class InspectionController {
         logger.info("-------------GET:/inspection/listtoday------------");
 
         List<InspectionResult> list = inspectionService.getTodayInspectionResult();
+        if(list.size() == 0){
+            list.add(new InspectionResult());
+        }
         if(list != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -44,7 +47,7 @@ public class InspectionController {
         }
     }
 
-    @RequestMapping(value = "/listbydate", method = RequestMethod.GET)
+    @RequestMapping(value = "/listbydate/{date}", method = RequestMethod.GET)
     @ApiOperation(value = "/inspection/listbydate/{date}", notes = "列出指定日期的巡查记录")
     public IntepenResult<List> getInspectionByDate(@ApiParam(value = "指定的日期", required = true)
                                                        @PathVariable(value = "date") Date date){
@@ -52,6 +55,9 @@ public class InspectionController {
 
         List<InspectionResult> list = inspectionService.getInspectionResultByDate(date);
 
+        if(list.size() == 0){
+            list.add(new InspectionResult());
+        }
         if(list != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -69,6 +75,9 @@ public class InspectionController {
 
         List<InspectionResult> list = inspectionService.getInspectionResultByElderId(id);
 
+        if(list.size() == 0){
+            list.add(new InspectionResult());
+        }
         if(list != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -91,6 +100,9 @@ public class InspectionController {
 
         List<InspectionResult> list = inspectionService.getInspectionResultByDateZone(dateA, dateB);
 
+        if(list.size() == 0){
+            list.add(new InspectionResult());
+        }
         if(list != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -123,6 +135,9 @@ public class InspectionController {
         }
         List list = inspectionService.getInspectionByElderNameAndDateZone(elderName, dateA, dateB);
 
+        if(list.size() == 0){
+            list.add(new InspectionResult());
+        }
         if(list != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }

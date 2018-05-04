@@ -45,6 +45,9 @@ public class ThresholdController {
 
         List<Threshold> thresholds = thresholdService.getAllThreshold();
 
+        if(thresholds.size() == 0){
+            thresholds.add(new Threshold());
+        }
         if(thresholds != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), thresholds);
         }

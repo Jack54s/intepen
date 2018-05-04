@@ -1,13 +1,9 @@
 package com.jack.intepen.service;
 
-import com.jack.intepen.dao.ElderDao;
 import com.jack.intepen.dao.InspectionDao;
 import com.jack.intepen.dao.InspectionResultDao;
-import com.jack.intepen.dao.NurseDao;
-import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.Inspection;
 import com.jack.intepen.vo.InspectionResult;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

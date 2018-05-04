@@ -40,6 +40,9 @@ public class EventsController {
 
         List<Events> events = eventsService.getAllEvents();
 
+        if(events.size() == 0){
+            events.add(new Events());
+        }
         if(events != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), events);
         }
@@ -56,6 +59,9 @@ public class EventsController {
 
         List<Events> events = eventsService.getUncompletedEvents();
 
+        if(events.size() == 0){
+            events.add(new Events());
+        }
         if(events != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), events);
         }

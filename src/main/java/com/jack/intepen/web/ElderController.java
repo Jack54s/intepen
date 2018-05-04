@@ -42,6 +42,10 @@ public class ElderController {
         logger.info("------------------GET:/elder/list-----------------");
 
         List<ElderProfile> list = elderService.getElderList();
+
+        if(list.size() == 0){
+            list.add(new ElderProfile());
+        }
         if(list != null){
             return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), list);
         }
@@ -89,7 +93,8 @@ public class ElderController {
 
             ElderProfile elder = elderService.getElderByIdCard(idCard);
             if(elder == null){
-                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), new ArrayList());
+                elders.add(new ElderProfile());
+                return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
             }
             if(elder.getName().equals(name)){
                 elders.add(elder);
@@ -101,6 +106,10 @@ public class ElderController {
         }
         else if(name != null && !("".equals(name)) && (idCard == null || "".equals(idCard))){
             List<ElderProfile> elders = elderService.getElderByName(name);
+
+            if(elders.size() == 0){
+                elders.add(new ElderProfile());
+            }
             if(elders != null){
                 return  new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
             }
@@ -113,6 +122,7 @@ public class ElderController {
 
             ElderProfile elder = elderService.getElderByIdCard(idCard);
             if(elder == null){
+                elders.add(new ElderProfile());
                 return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
             }
             else{
@@ -134,6 +144,9 @@ public class ElderController {
 
         List<ElderProfile> elders = elderService.getUndistributedElder();
 
+        if(elders.size() == 0){
+            elders.add(new ElderProfile());
+        }
         if(elders != null){
             return new IntepenResult<>(AuthcEnum.SUCCESS.getCode(), elders);
         }
@@ -237,6 +250,9 @@ public class ElderController {
 
         List<MedicalRecord> medicalRecords = elderService.getMedicalRecords(elderId);
 
+        if(medicalRecords.size() == 0){
+            medicalRecords.add(new MedicalRecord());
+        }
         if(medicalRecords == null){
             return new IntepenResult<>(ElderEnum.QUERY_MEDICAL_RECORD_ERROR.getCode(), ElderEnum.QUERY_MEDICAL_RECORD_ERROR.getError());
         }

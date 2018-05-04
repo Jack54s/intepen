@@ -2,6 +2,7 @@ package com.jack.intepen.dao;
 
 import com.jack.intepen.entity.Elder;
 import com.jack.intepen.entity.Nurse;
+import com.jack.intepen.vo.ElderProfile;
 import com.jack.intepen.vo.NurseProfile;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,9 @@ public interface NurseDao {
     Nurse queryNurseById(int id);
     Nurse queryNurseByAccount(String account);
     List<Nurse> queryNurseByName(String Name);
+    List<NurseProfile> queryNurseProfile();
     List<Nurse> queryNurse();
+    List<ElderProfile> queryElderProfileByNurse(int nurseId);
     List<Elder> queryElderByNurse(int nurseId);
     NurseProfile queryNurseProfileById(int id);
     NurseProfile queryNurseProfileByAccount(String account);
